@@ -45,17 +45,17 @@ export abstract class BaseApiService {
 			.catch(error => console.error(error.toString()));
 	}
 
-	public call<TResult>(uri: string, params?: any): Observable<TResult> {
+	protected call<TResult>(uri: string, params?: any): Observable<TResult> {
 		return from(this.hubConnection.invoke<TResult>(uri, params));
 	}
 
-	public asyncEventAsPromise<T>(eventName: string): Promise<T> {
+	protected asyncEventAsPromise<T>(eventName: string): Promise<T> {
 		return new Promise<T>(resolve => {
 			this.hubConnection.on(eventName, argument => resolve(argument));
 		});
 	}
 
-	public asyncEventAsObservable<T>(eventName: string): Observable<T> {
+	protected asyncEventAsObservable<T>(eventName: string): Observable<T> {
 		return from(this.asyncEventAsPromise<T>(eventName));
 	}
 }

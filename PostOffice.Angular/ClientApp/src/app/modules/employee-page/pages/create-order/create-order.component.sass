@@ -1,3 +1,7 @@
+button.add-cargo
+	width: 100%
+	margin-bottom: 15px
+
 mat-grid-tile:nth-child(odd) mat-form-field
 	padding: 0 15px 0 0
 mat-grid-tile:nth-child(even) mat-form-field
@@ -9,7 +13,10 @@ mat-grid-tile:nth-child(even) mat-form-field
 	mat-grid-tile:nth-child(2) mat-form-field
 		padding: 0
 	mat-grid-tile:nth-child(3) mat-form-field
-		padding: 0 0 0 15px
+		padding: 0 15px 0 15px
+	mat-grid-tile:nth-child(4) button
+		height: 50px
+		top: -10px
 
 .float-left
 	float: left
@@ -25,9 +32,9 @@ mat-card-title
 /*hide controls in numeric input*/
 input::-webkit-outer-spin-button
 input::-webkit-inner-spin-button
-  -webkit-appearance: none
-  margin: 0
+	-webkit-appearance: none
+	margin: 0
 
 /* Firefox */
 input[type=number]
-  -moz-appearance: textfield
+	-moz-appearance: textfield

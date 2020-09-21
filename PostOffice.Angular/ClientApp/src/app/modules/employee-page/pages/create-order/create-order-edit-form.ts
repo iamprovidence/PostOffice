@@ -1,12 +1,11 @@
 import { Injectable } from "@angular/core";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { FormControl, FormGroup, Validators, FormArray } from "@angular/forms";
+import { Cargo } from '@modules/employee-page/models/cargo.model';
 import { EditOrder } from '@modules/employee-page/models/edit-order.model.ts';
 import { BaseEditForm } from "@shared/form/base-edit-form";
 import { Observable, of } from 'rxjs';
 
-@Injectable({
-	providedIn: 'root',
-})
+@Injectable()
 export class CreateOrderEditForm extends BaseEditForm<EditOrder> {
 
 	private static readonly MIN_LENGTH = 3;
@@ -16,7 +15,7 @@ export class CreateOrderEditForm extends BaseEditForm<EditOrder> {
 	public senderStreet = new FormControl('', [Validators.required, Validators.minLength(CreateOrderEditForm.MIN_LENGTH)]);
 	public revieverCity = new FormControl('', [Validators.required, Validators.minLength(CreateOrderEditForm.MIN_LENGTH)]);
 	public revieverStreet = new FormControl('', [Validators.required, Validators.minLength(CreateOrderEditForm.MIN_LENGTH)]);
-	public cargos = new FormControl([], [Validators.required]);
+	public cargos = new FormArray([], [Validators.required]);
 
 	public orderFormGroup = new FormGroup({
 		description: this.description,
@@ -48,5 +47,18 @@ export class CreateOrderEditForm extends BaseEditForm<EditOrder> {
 		};
 
 		return of(editOrder);
+	}
+
+	public addCargo(cargo: Cargo): void {
+		this.cargos.push(new FormGroup({
+			height: new FormControl(cargo?.height, [Validators.required]),
+			width: new FormControl(cargo?.width, [Validators.required]),
+			length: new FormControl(cargo?.length, [Validators.required]),
+		}));
+	}
+
+	public deleteCargo(index: number): void {
+		this.cargos.controls.splice(index, 1);
+		this.cargos.updateValueAndValidity();
 	}
 }

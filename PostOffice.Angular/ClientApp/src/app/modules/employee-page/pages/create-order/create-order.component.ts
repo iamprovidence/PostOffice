@@ -1,5 +1,7 @@
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { OrderDataService } from '@modules/employee-page/services/order-data.service';
 import { take } from 'rxjs/operators';
 import { CreateOrderEditForm } from './create-order-edit-form';
 
@@ -7,6 +9,7 @@ import { CreateOrderEditForm } from './create-order-edit-form';
 	selector: 'app-create-order',
 	templateUrl: './create-order.component.html',
 	styleUrls: ['./create-order.component.sass'],
+	providers: [CreateOrderEditForm],
 })
 export class CreateOrderComponent implements OnInit {
 
@@ -15,6 +18,8 @@ export class CreateOrderComponent implements OnInit {
 
 	constructor(
 		private ngZone: NgZone,
+		private router: Router,
+		private orderDataService: OrderDataService,
 		public editForm: CreateOrderEditForm,
 	) { }
 
@@ -28,9 +33,22 @@ export class CreateOrderComponent implements OnInit {
 			.subscribe(() => this.autosize.resizeToFitContent(true));
 	}
 
-	public v()
-	{
+	public addNewCargo(): void {
 		console.log(this.editForm)
-		this.editForm.getValue().subscribe(s => console.log(s))
+		this.editForm.addCargo(null);
+	}
+
+	public deleteCargo(index: number): void {
+		this.editForm.deleteCargo(index);
+	}
+
+	public saveOrder(): void {
+		this.orderDataService
+			.registerOrder(null)
+			.subscribe(didSucceed => {
+				if (didSucceed) {
+					this.router.navigate(['/employee/order-created']);
+				}
+			});
 	}
 }
