@@ -1,0 +1,9 @@
+@model EnvironmentData
+
+@section EnvironmentData {
+	<script type="application/json" id="environmentUrls">
+		@Html.Raw(Json.Serialize(Model.EnvironmentUrls))
+	</script>
+}
+
+<app-root></app-root>

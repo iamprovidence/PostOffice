@@ -1,0 +1,20 @@
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Angular</title>
+	<base href="/">
+
+	@RenderSection("EnvironmentData", required: true)
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	@RenderBody()
+	<script src="runtime-es2015.js" asp-append-version="true" type="module"></script>
+	<script src="runtime-es5.js" asp-append-version="true" nomodule defer></script>
+	<script src="polyfills-es5.js" asp-append-version="true" nomodule defer></script>
+	<script src="polyfills-es2015.js" asp-append-version="true" type="module"></script>
+	<script src="main-es2015.js" asp-append-version="true" type="module"></script>
+	<script src="main-es5.js" asp-append-version="true" nomodule defer></script>
+</body>
+</html>

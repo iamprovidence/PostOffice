@@ -1,0 +1,141 @@
+<mat-card>
+	<mat-card-title>
+		Create order
+	</mat-card-title>
+
+	<mat-card-content>
+		<mat-horizontal-stepper linear="false" editable="true">
+			<!--order step-->
+			<mat-step [stepControl]="editForm.orderFormGroup">
+				<ng-template matStepLabel>Order</ng-template>
+				<ng-container *ngTemplateOutlet="orderStep"></ng-container>
+
+				<div>
+					<button mat-raised-button matStepperNext class="float-right" color="primary" (click)="v()">Next</button>
+				</div>
+			</mat-step>
+
+			<!--cargo step-->
+			<mat-step [stepControl]="editForm.cargoFormGroup">
+				<ng-template matStepLabel>Cargo</ng-template>
+				<ng-container *ngTemplateOutlet="cargoStep"></ng-container>
+
+				<div>
+					<button mat-raised-button matStepperPrevious class="float-left" color="primary">Back</button>
+					<button mat-raised-button matStepperNext class="float-right" color="primary">Next</button>
+				</div>
+			</mat-step>
+
+			<!--done-->
+			<mat-step>
+				<ng-template matStepLabel>Done</ng-template>
+				<ng-container *ngTemplateOutlet="doneStep"></ng-container>
+
+				<div>
+					<button mat-raised-button matStepperPrevious class="float-left" color="primary">Back</button>
+					<button mat-raised-button matStepperNext class="float-right" color="primary">Confirm</button>
+				</div>
+			</mat-step>
+
+		</mat-horizontal-stepper>
+	</mat-card-content>
+</mat-card>
+
+<!--steps-->
+
+<ng-template #orderStep>
+
+	<form [formGroup]="editForm.orderFormGroup">
+
+		<mat-form-field appearance="outline">
+			<mat-label>Description</mat-label>
+			<textarea #autosize="cdkTextareaAutosize" matInput cdkTextareaAutosize cdkAutosizeMinRows="1"
+				cdkAutosizeMaxRows="5" formControlName="description"></textarea>
+		</mat-form-field>
+
+		<mat-grid-list cols="2" rowHeight="5:1">
+
+			<mat-grid-tile>
+				<span>
+					Sender location
+				</span>
+			</mat-grid-tile>
+
+			<mat-grid-tile>
+				<span>
+					Reciever location
+				</span>
+			</mat-grid-tile>
+
+			<mat-grid-tile>
+				<mat-form-field appearance="outline">
+					<mat-label>City</mat-label>
+					<input matInput formControlName="senderCity" required>
+				</mat-form-field>
+			</mat-grid-tile>
+
+			<mat-grid-tile>
+				<mat-form-field appearance="outline">
+					<mat-label>City</mat-label>
+					<input matInput formControlName="revieverCity" required>
+				</mat-form-field>
+			</mat-grid-tile>
+
+
+			<mat-grid-tile>
+				<mat-form-field appearance="outline">
+					<mat-label>Street</mat-label>
+					<input matInput formControlName="senderStreet" required>
+				</mat-form-field>
+			</mat-grid-tile>
+
+			<mat-grid-tile>
+				<mat-form-field appearance="outline">
+					<mat-label>Street</mat-label>
+					<input matInput formControlName="revieverStreet" required>
+				</mat-form-field>
+			</mat-grid-tile>
+
+		</mat-grid-list>
+	</form>
+
+</ng-template>
+
+<ng-template #cargoStep>
+	<form [formGroup]="editForm.cargoFormGroup">
+
+		<mat-grid-list class="cargo" cols="16" rowHeight="100px">
+
+			<mat-grid-tile colspan="5" rowspan="1">
+				<mat-form-field appearance="outline">
+					<mat-label>Width</mat-label>
+					<input matInput type="number" required>
+				</mat-form-field>
+			</mat-grid-tile>
+
+			<mat-grid-tile colspan="5" rowspan="1">
+				<mat-form-field appearance="outline">
+					<mat-label>Height</mat-label>
+					<input matInput required>
+				</mat-form-field>
+			</mat-grid-tile>
+
+			<mat-grid-tile colspan="5" rowspan="1">
+				<mat-form-field appearance="outline">
+					<mat-label>Length</mat-label>
+					<input matInput required>
+				</mat-form-field>
+			</mat-grid-tile>
+
+			<mat-grid-tile colspan="1" rowspan="1">
+				Delete
+			</mat-grid-tile>
+
+		</mat-grid-list>
+	</form>
+</ng-template>
+
+<ng-template #doneStep>
+	<h1>You are now done</h1>
+	<h2>Do you want to confirm order?</h2>
+</ng-template>

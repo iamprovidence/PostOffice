@@ -1,0 +1,76 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30320.27
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostOffice.API", "PostOffice.API\PostOffice.API.csproj", "{2E404F41-9373-40BC-A54D-5FE35DBA9FFA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostOffice.Angular", "PostOffice.Angular\PostOffice.Angular.csproj", "{CF6AD3F5-4150-4F56-B000-07453A7176E6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{155A838F-23FC-458B-92A4-21D04F586D97}"
+	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		.editorconfig = .editorconfig
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		appveyor.yml = appveyor.yml
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostOffice.Core", "PostOffice.Core\PostOffice.Core.csproj", "{336915BB-BB2A-4DEB-B74E-44DF3A5A2C7B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostOffice.Application", "PostOffice.Application\PostOffice.Application.csproj", "{7DE6DB5A-FDFD-40C5-8E3D-50104D69AA45}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostOffice.Domain", "PostOffice.Domain\PostOffice.Domain.csproj", "{71C3C365-600A-430A-88BE-DC7FF9D49F02}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostOffice.Infrastructure", "PostOffice.Infrastructure\PostOffice.Infrastructure.csproj", "{3D0AA3DE-877F-4C8A-AE8B-74B0926CAAF9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{601F49E7-6FC1-4AB6-9E33-E12E0329DCE0}"
+	ProjectSection(SolutionItems) = preProject
+		Infrastructure\build.cmd = Infrastructure\build.cmd
+		Infrastructure\clearall.cmd = Infrastructure\clearall.cmd
+		Infrastructure\clearcache.cmd = Infrastructure\clearcache.cmd
+		Infrastructure\docker-compose.yml = Infrastructure\docker-compose.yml
+		Infrastructure\runall.cmd = Infrastructure\runall.cmd
+		Infrastructure\start.cmd = Infrastructure\start.cmd
+		Infrastructure\stop.cmd = Infrastructure\stop.cmd
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2E404F41-9373-40BC-A54D-5FE35DBA9FFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E404F41-9373-40BC-A54D-5FE35DBA9FFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E404F41-9373-40BC-A54D-5FE35DBA9FFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E404F41-9373-40BC-A54D-5FE35DBA9FFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF6AD3F5-4150-4F56-B000-07453A7176E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF6AD3F5-4150-4F56-B000-07453A7176E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF6AD3F5-4150-4F56-B000-07453A7176E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF6AD3F5-4150-4F56-B000-07453A7176E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{336915BB-BB2A-4DEB-B74E-44DF3A5A2C7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{336915BB-BB2A-4DEB-B74E-44DF3A5A2C7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{336915BB-BB2A-4DEB-B74E-44DF3A5A2C7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{336915BB-BB2A-4DEB-B74E-44DF3A5A2C7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DE6DB5A-FDFD-40C5-8E3D-50104D69AA45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DE6DB5A-FDFD-40C5-8E3D-50104D69AA45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DE6DB5A-FDFD-40C5-8E3D-50104D69AA45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DE6DB5A-FDFD-40C5-8E3D-50104D69AA45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71C3C365-600A-430A-88BE-DC7FF9D49F02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71C3C365-600A-430A-88BE-DC7FF9D49F02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71C3C365-600A-430A-88BE-DC7FF9D49F02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71C3C365-600A-430A-88BE-DC7FF9D49F02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D0AA3DE-877F-4C8A-AE8B-74B0926CAAF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D0AA3DE-877F-4C8A-AE8B-74B0926CAAF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D0AA3DE-877F-4C8A-AE8B-74B0926CAAF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D0AA3DE-877F-4C8A-AE8B-74B0926CAAF9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {63AD0FAA-9C18-4657-A6CF-E037E92F7941}
+	EndGlobalSection
+EndGlobal

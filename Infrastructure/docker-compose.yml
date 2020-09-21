@@ -1,0 +1,9 @@
+version: '3.4'
+
+services:
+  postoffice.mongo:
+    image: mongo
+	
+  postoffice.redis:
+    ports:
+      - "6379:6379"
