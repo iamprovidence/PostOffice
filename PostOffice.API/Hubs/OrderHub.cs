@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using PostOffice.API.Configurations;
 using PostOffice.Application.Common.Idempotency;
 using PostOffice.Application.Orders;
-using PostOffice.Application.Orders.Output;
+using PostOffice.Application.Orders.Outputs;
 using PostOffice.Application.Orders.ViewModels;
 using System;
 using System.Collections.Generic;
