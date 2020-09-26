@@ -7,6 +7,7 @@ import { Observable, of } from 'rxjs';
 
 @Injectable()
 export class CreateOrderEditForm extends BaseEditForm<EditOrder> {
+	public form: FormGroup;
 
 	private static readonly MIN_LENGTH = 3;
 
@@ -29,10 +30,6 @@ export class CreateOrderEditForm extends BaseEditForm<EditOrder> {
 		cargos: this.cargos,
 	});
 
-	public form: FormGroup = new FormGroup({
-		//...this.orderFormGroup.controls,
-		//...this.cargoFormGroup.controls,
-	});
 
 	public patchValue(value: EditOrder): void {
 		if (value === null) return;
@@ -41,9 +38,13 @@ export class CreateOrderEditForm extends BaseEditForm<EditOrder> {
 	}
 
 	public getValue(): Observable<EditOrder> {
+		const cargos: Cargo[] = [
+			...this.cargos.value,
+		];
+
 		const editOrder: EditOrder = {
 			...this.orderFormGroup.value,
-			...this.cargoFormGroup.value,
+			cargos,
 		};
 
 		return of(editOrder);

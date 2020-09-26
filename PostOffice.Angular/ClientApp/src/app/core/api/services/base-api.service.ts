@@ -7,13 +7,16 @@ import { EnvironmentService } from "../../environment/services/environment.servi
 	providedIn: "root",
 })
 export abstract class BaseApiService {
-	protected abstract hubSpot: string;
+	protected hubSpot: string;
 
 	private hubConnection: signalR.HubConnection;
 
 	constructor(private environmentService: EnvironmentService) {
+		this.initialize();
 		this.startConnection();
 	}
+
+	protected abstract initialize(): void
 
 	private startConnection(): void {
 		const hubUrl = `${this.environmentService.environmentUrls.postOfficeApiServerUrl}/${this.hubSpot}`;
@@ -23,7 +26,7 @@ export abstract class BaseApiService {
 			.withUrl(hubUrl, {
 				skipNegotiation: true,
 				transport: signalR.HttpTransportType.WebSockets,
-				accessTokenFactory: () => of("asd").toPromise(),
+				accessTokenFactory: () => of("add_token_here").toPromise(),
 			})
 			.withAutomaticReconnect()
 			.build();
@@ -46,6 +49,8 @@ export abstract class BaseApiService {
 	}
 
 	protected call<TResult>(uri: string, params?: any): Observable<TResult> {
+		console.log('[API]', { uri, params })
+
 		return from(this.hubConnection.invoke<TResult>(uri, params));
 	}
 

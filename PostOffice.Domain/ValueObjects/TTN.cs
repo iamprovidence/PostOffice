@@ -35,7 +35,7 @@ namespace PostOffice.Domain.ValueObjects
 		public static TTN Generate()
 		{
 			var random = new Random();
-			var value = string.Concat(Enumerable.Range(0, TTN_LENGTH).Select(v => random.Next()));
+			var value = string.Concat(Enumerable.Range(0, TTN_LENGTH).Select(v => random.Next(9)));
 			return new TTN(value);
 		}
 

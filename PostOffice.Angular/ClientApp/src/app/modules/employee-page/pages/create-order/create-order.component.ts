@@ -2,7 +2,7 @@ import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { OrderDataService } from '@modules/employee-page/services/order-data.service';
-import { take } from 'rxjs/operators';
+import { take, switchMap } from 'rxjs/operators';
 import { CreateOrderEditForm } from './create-order-edit-form';
 
 @Component({
@@ -43,8 +43,11 @@ export class CreateOrderComponent implements OnInit {
 	}
 
 	public saveOrder(): void {
-		this.orderDataService
-			.registerOrder(null)
+		this.editForm
+			.getValue()
+			.pipe(
+				switchMap((editOrderItem) => this.orderDataService.registerOrder(editOrderItem)),
+			)
 			.subscribe(didSucceed => {
 				if (didSucceed) {
 					this.router.navigate(['/employee/order-created']);

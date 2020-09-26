@@ -21,7 +21,7 @@ namespace PostOffice.API.Hubs
 		private readonly Lazy<IConnectionManager> _connectionManager;
 		private readonly Lazy<IReadOnlyUserContext> _userContext;
 
-		protected HubBase(IServiceProvider serviceProvider)
+		public HubBase(IServiceProvider serviceProvider)
 		{
 			_serviceProvider = serviceProvider;
 
@@ -32,7 +32,7 @@ namespace PostOffice.API.Hubs
 
 		private TService InitService<TService>()
 		{
-			return _serviceProvider.GetService<TService>();
+			return _serviceProvider.GetRequiredService<TService>();
 		}
 
 		public IMediator Mediator => _mediator.Value;
@@ -63,8 +63,9 @@ namespace PostOffice.API.Hubs
 		private IReadOnlyCollection<ConnectionType> GetHubConnectionTypes()
 		{
 			return GetType()
-				.GetCustomAttributes(typeof(ConnectionType), inherit: true)
-				.Cast<ConnectionType>()
+				.GetCustomAttributes(typeof(HubConnectionAttribute), inherit: false)
+				.Cast<HubConnectionAttribute>()
+				.Select(a => a.ConnectionType)
 				.ToArray();
 		}
 	}
