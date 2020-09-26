@@ -7,13 +7,16 @@ import { EnvironmentService } from "../../environment/services/environment.servi
 	providedIn: "root",
 })
 export abstract class BaseApiService {
-	protected abstract hubSpot: string;
+	protected hubSpot: string;
 
 	private hubConnection: signalR.HubConnection;
 
 	constructor(private environmentService: EnvironmentService) {
+		this.initialize();
 		this.startConnection();
 	}
+
+	protected abstract initialize(): void
 
 	private startConnection(): void {
 		const hubUrl = `${this.environmentService.environmentUrls.postOfficeApiServerUrl}/${this.hubSpot}`;
@@ -23,7 +26,7 @@ export abstract class BaseApiService {
 			.withUrl(hubUrl, {
 				skipNegotiation: true,
 				transport: signalR.HttpTransportType.WebSockets,
-				accessTokenFactory: () => of("asd").toPromise(),
+				accessTokenFactory: () => of("add_token_here").toPromise(),
 			})
 			.withAutomaticReconnect()
 			.build();
@@ -45,17 +48,19 @@ export abstract class BaseApiService {
 			.catch(error => console.error(error.toString()));
 	}
 
-	public call<TResult>(uri: string, params?: any): Observable<TResult> {
+	protected call<TResult>(uri: string, params?: any): Observable<TResult> {
+		console.log('[API]', { uri, params })
+
 		return from(this.hubConnection.invoke<TResult>(uri, params));
 	}
 
-	public asyncEventAsPromise<T>(eventName: string): Promise<T> {
+	protected asyncEventAsPromise<T>(eventName: string): Promise<T> {
 		return new Promise<T>(resolve => {
 			this.hubConnection.on(eventName, argument => resolve(argument));
 		});
 	}
 
-	public asyncEventAsObservable<T>(eventName: string): Observable<T> {
+	protected asyncEventAsObservable<T>(eventName: string): Observable<T> {
 		return from(this.asyncEventAsPromise<T>(eventName));
 	}
 }

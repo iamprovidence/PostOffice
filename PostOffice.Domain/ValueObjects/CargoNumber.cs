@@ -8,9 +8,14 @@ namespace PostOffice.Domain.ValueObjects
 	{
 		public Guid Number { get; }
 
-		public CargoNumber(Guid number)
+		private CargoNumber(Guid number)
 		{
 			Number = number;
+		}
+
+		public static CargoNumber GenerateNew()
+		{
+			return new CargoNumber(Guid.NewGuid());
 		}
 
 		protected override IEnumerable<object> GetAtomicValues()

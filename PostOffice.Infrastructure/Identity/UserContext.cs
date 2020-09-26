@@ -4,6 +4,7 @@ namespace PostOffice.Infrastructure.Identity
 {
 	public class UserContext : IUserContext
 	{
-		public string UserIdentifier { get; set; }
+		// TODO: fix this does not get initialized
+		public string UserIdentifier { get; set; } = "Default";
 	}
 }

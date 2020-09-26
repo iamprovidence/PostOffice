@@ -2,7 +2,7 @@ using PostOffice.Application.Common.Identity;
 
 namespace PostOffice.Infrastructure.Identity
 {
-	class UserContextSettable : IUserContextSettable
+	public class UserContextSettable : IUserContextSettable
 	{
 		private readonly IUserContext _userContext;
 

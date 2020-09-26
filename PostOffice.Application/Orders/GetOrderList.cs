@@ -1,5 +1,5 @@
 using MediatR;
-using PostOffice.Application.Common.ViewModels;
+using PostOffice.Application.Orders.ViewModels;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;

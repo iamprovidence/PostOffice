@@ -4,6 +4,8 @@ using PostOffice.Application.Common.Persistence;
 using PostOffice.Application.Common.ViewModels;
 using PostOffice.Domain.Entities;
 using PostOffice.Domain.ValueObjects;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,6 +16,7 @@ namespace PostOffice.Application.Orders
 		public string Description { get; set; }
 		public LocationViewModel SenderLocation { get; set; }
 		public LocationViewModel RecipientLocation { get; set; }
+		public IReadOnlyCollection<CargoViewModel> Cargos { get; set; }
 	}
 
 	public class CreateOrderInputValidator : AbstractValidator<CreateOrderInput>
@@ -30,6 +33,12 @@ namespace PostOffice.Application.Orders
 			RuleFor(i => i.RecipientLocation)
 				.NotNull()
 				.SetValidator(new LocationViewModelValidator());
+
+			RuleFor(i => i.Cargos)
+				.NotEmpty();
+
+			RuleForEach(i => i.Cargos)
+				.SetValidator(new CargoViewModelValidator());
 		}
 	}
 
@@ -46,7 +55,8 @@ namespace PostOffice.Application.Orders
 		{
 			var senderLocation = new Location(request.SenderLocation.City, request.SenderLocation.City);
 			var recipientLocation = new Location(request.RecipientLocation.City, request.RecipientLocation.City);
-			var orderToCreate = Order.CreateEmpty(request.Description, senderLocation, recipientLocation);
+			var cargos = request.Cargos.Select(c => Cargo.CreateNew(c.Width, c.Length, c.Height));
+			var orderToCreate = Order.CreateNew(request.Description, senderLocation, recipientLocation, cargos);
 
 			await _orderRepository.AddAsync(orderToCreate, cancellationToken);
 

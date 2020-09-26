@@ -1,25 +1,20 @@
 using Microsoft.AspNetCore.Authorization;
 using PostOffice.API.Configurations;
 using PostOffice.Application.Common.Idempotency;
-using PostOffice.Application.Common.ViewModels;
 using PostOffice.Application.Orders;
+using PostOffice.Application.Orders.Outputs;
+using PostOffice.Application.Orders.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace PostOffice.API.Hubs
 {
-	// TODO: move UI Outputs to separate project 
-	public interface IOrderHubResponse
-	{
-		Task OrderCreated(int v);
-	}
-
 	[AllowAnonymous]
 	[HubConnection(ConnectionType.Order)]
-	public class OrderHub : HubBase<IOrderHubResponse>
+	public class OrderHub : HubBase<IOrderOutput>
 	{
-		protected OrderHub(IServiceProvider serviceProvider)
+		public OrderHub(IServiceProvider serviceProvider)
 			: base(serviceProvider) { }
 
 		public Task<IReadOnlyCollection<OrderListItemViewModel>> GetOrders(GetOrderListInput query) => Mediator.Send(query);

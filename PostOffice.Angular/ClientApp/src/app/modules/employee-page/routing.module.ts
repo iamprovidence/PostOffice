@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ChooseActionComponent } from "./pages/choose-action/choose-action.component";
 import { CreateOrderComponent } from "./pages/create-order/create-order.component";
+import { OrderCreatedComponent } from "./pages/order-created/order-created.component";
 
 const routes: Routes = [
 	{
@@ -29,6 +30,14 @@ const routes: Routes = [
 			animation: 'AboutPage',
 		},
 	},
+	{
+		path: 'order-created',
+		component: OrderCreatedComponent,
+		data: {
+			depth: "0",
+			animation: 'AboutPage',
+		},
+	},
 ];
 
 @NgModule({
@@ -36,5 +45,5 @@ const routes: Routes = [
 	exports: [RouterModule],
 })
 export class RoutingModule {
-	public static components = [ChooseActionComponent, CreateOrderComponent];
+	public static components = [ChooseActionComponent, CreateOrderComponent, OrderCreatedComponent];
 }

@@ -4,10 +4,12 @@ using PostOffice.Domain.Enums;
 using PostOffice.Domain.Exceptions;
 using PostOffice.Domain.ValueObjects;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
 namespace PostOffice.Domain.Entities
 {
+	[Table("Orders")]
 	public class Order : IEntity<TTN>, IAggregateRoot
 	{
 		public TTN Identifier { get; }
@@ -26,6 +28,7 @@ namespace PostOffice.Domain.Entities
 			string description,
 			Location senderLocation,
 			Location recipientLocation,
+			Location currentLocation,
 			IEnumerable<Cargo> cargos = null
 			)
 		{
@@ -37,6 +40,7 @@ namespace PostOffice.Domain.Entities
 			Description = description;
 			SenderLocation = senderLocation;
 			RecipientLocation = recipientLocation;
+			CurrentLocation = currentLocation;
 
 			Price = CalculatePrice();
 		}
@@ -52,14 +56,7 @@ namespace PostOffice.Domain.Entities
 			Location recipientLocation,
 			IEnumerable<Cargo> cargos)
 		{
-			return new Order(description, senderLocation, recipientLocation, cargos);
-		}
-		public static Order CreateEmpty(
-			string description,
-			Location senderLocation,
-			Location recipientLocation)
-		{
-			return new Order(description, senderLocation, recipientLocation);
+			return new Order(description, senderLocation, recipientLocation, senderLocation, cargos);
 		}
 
 		public void AddCargo(Cargo cargo)

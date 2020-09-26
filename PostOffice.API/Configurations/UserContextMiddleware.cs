@@ -13,10 +13,11 @@ namespace PostOffice.API.Configurations
 			_userContextSettable = userContextSettable;
 		}
 
-		public Task InvokeAsync(HttpContext context, RequestDelegate next)
+		public async Task InvokeAsync(HttpContext context, RequestDelegate next)
 		{
+			// TODO: get value from headers
 			_userContextSettable.SetContext("random");
-			return Task.CompletedTask;
+			await next.Invoke(context);
 		}
 	}
 }

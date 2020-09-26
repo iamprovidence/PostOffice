@@ -1,3 +1,4 @@
+using MongoDB.Driver;
 using PostOffice.Application.Common.Persistence;
 using PostOffice.Domain.Entities;
 using System.Threading;
@@ -7,9 +8,21 @@ namespace PostOffice.Infrastructure.Persistence
 {
 	public class OrderRepository : IOrderRepository
 	{
+		private readonly IMongoCollection<Order> _orderCollection;
+
+		public OrderRepository(MongoContext mongoContext)
+		{
+			_orderCollection = mongoContext.Collection<Order>();
+		}
+
 		public Task AddAsync(Order order, CancellationToken cancellationToken)
 		{
-			throw new System.NotImplementedException();
+			var options = new InsertOneOptions
+			{
+				BypassDocumentValidation = false,
+			};
+
+			return _orderCollection.InsertOneAsync(order, options, cancellationToken);
 		}
 	}
 }

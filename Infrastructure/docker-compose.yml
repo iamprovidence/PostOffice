@@ -3,7 +3,10 @@ version: '3.4'
 services:
   postoffice.mongo:
     image: mongo
-	
+    ports:
+      - "27017:27017"
+
   postoffice.redis:
+    image: redis
     ports:
       - "6379:6379"

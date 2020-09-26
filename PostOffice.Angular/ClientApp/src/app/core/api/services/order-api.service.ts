@@ -9,15 +9,18 @@ import { BaseApiService } from './base-api.service';
 })
 export class OrderApiService extends BaseApiService {
 
-	protected hubSpot = "orders";
-
 	constructor(environmentService: EnvironmentService) {
 		super(environmentService);
+	}
+
+	protected initialize(): void {
+		this.hubSpot = "orders";
 	}
 
 	public createOrder(createOrderRequest: CreateOrderRequest): Observable<boolean> {
 		return this.call<boolean>("CreateOrder", createOrderRequest);
 	}
+	// TODO: example resolving event as response
 /*
 	public createOrder2() {
 		this.hubConnection.invoke<number>("MakeOrder", {})

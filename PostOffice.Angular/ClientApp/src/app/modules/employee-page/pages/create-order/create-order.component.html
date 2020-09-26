@@ -4,14 +4,14 @@
 	</mat-card-title>
 
 	<mat-card-content>
-		<mat-horizontal-stepper linear="false" editable="true">
+		<mat-horizontal-stepper linear="true" editable="true">
 			<!--order step-->
 			<mat-step [stepControl]="editForm.orderFormGroup">
 				<ng-template matStepLabel>Order</ng-template>
 				<ng-container *ngTemplateOutlet="orderStep"></ng-container>
 
 				<div>
-					<button mat-raised-button matStepperNext class="float-right" color="primary" (click)="v()">Next</button>
+					<button mat-raised-button matStepperNext class="float-right" color="primary">Next</button>
 				</div>
 			</mat-step>
 
@@ -33,7 +33,7 @@
 
 				<div>
 					<button mat-raised-button matStepperPrevious class="float-left" color="primary">Back</button>
-					<button mat-raised-button matStepperNext class="float-right" color="primary">Confirm</button>
+					<button mat-raised-button class="float-right" color="primary" (click)="saveOrder()">Confirm</button>
 				</div>
 			</mat-step>
 
@@ -49,8 +49,14 @@
 
 		<mat-form-field appearance="outline">
 			<mat-label>Description</mat-label>
-			<textarea #autosize="cdkTextareaAutosize" matInput cdkTextareaAutosize cdkAutosizeMinRows="1"
-				cdkAutosizeMaxRows="5" formControlName="description"></textarea>
+			<textarea #autosize="cdkTextareaAutosize"
+								matInput
+								cdkTextareaAutosize
+								cdkAutosizeMinRows="1"
+								cdkAutosizeMaxRows="5"
+								formControlName="description"
+								tabindex="1">
+			</textarea>
 		</mat-form-field>
 
 		<mat-grid-list cols="2" rowHeight="5:1">
@@ -70,14 +76,14 @@
 			<mat-grid-tile>
 				<mat-form-field appearance="outline">
 					<mat-label>City</mat-label>
-					<input matInput formControlName="senderCity" required>
+					<input matInput formControlName="senderCity" required tabindex="2">
 				</mat-form-field>
 			</mat-grid-tile>
 
 			<mat-grid-tile>
 				<mat-form-field appearance="outline">
 					<mat-label>City</mat-label>
-					<input matInput formControlName="revieverCity" required>
+					<input matInput formControlName="revieverCity" required tabindex="4">
 				</mat-form-field>
 			</mat-grid-tile>
 
@@ -85,14 +91,14 @@
 			<mat-grid-tile>
 				<mat-form-field appearance="outline">
 					<mat-label>Street</mat-label>
-					<input matInput formControlName="senderStreet" required>
+					<input matInput formControlName="senderStreet" required tabindex="3">
 				</mat-form-field>
 			</mat-grid-tile>
 
 			<mat-grid-tile>
 				<mat-form-field appearance="outline">
 					<mat-label>Street</mat-label>
-					<input matInput formControlName="revieverStreet" required>
+					<input matInput formControlName="revieverStreet" required tabindex="5">
 				</mat-form-field>
 			</mat-grid-tile>
 
@@ -104,38 +110,45 @@
 <ng-template #cargoStep>
 	<form [formGroup]="editForm.cargoFormGroup">
 
-		<mat-grid-list class="cargo" cols="16" rowHeight="100px">
+		<button mat-raised-button color="primary" class="add-cargo" (click)="addNewCargo()">Add cargo</button>
 
-			<mat-grid-tile colspan="5" rowspan="1">
-				<mat-form-field appearance="outline">
-					<mat-label>Width</mat-label>
-					<input matInput type="number" required>
-				</mat-form-field>
-			</mat-grid-tile>
+		<ng-container *ngFor="let cargo of editForm.cargos.controls; let i = index" formArrayName="cargos">
+			<mat-grid-list class="cargo" cols="33" rowHeight="100px">
 
-			<mat-grid-tile colspan="5" rowspan="1">
-				<mat-form-field appearance="outline">
-					<mat-label>Height</mat-label>
-					<input matInput required>
-				</mat-form-field>
-			</mat-grid-tile>
+				<ng-container [formArrayName]="i">
+					<mat-grid-tile colspan="10">
+						<mat-form-field appearance="outline">
+							<mat-label>Width</mat-label>
+							<input matInput type="number" required id="'width' + i" formControlName="width">
+						</mat-form-field>
+					</mat-grid-tile>
 
-			<mat-grid-tile colspan="5" rowspan="1">
-				<mat-form-field appearance="outline">
-					<mat-label>Length</mat-label>
-					<input matInput required>
-				</mat-form-field>
-			</mat-grid-tile>
+					<mat-grid-tile colspan="10">
+						<mat-form-field appearance="outline">
+							<mat-label>Height</mat-label>
+							<input matInput type="number" required id="'height' + i" formControlName="height">
+						</mat-form-field>
+					</mat-grid-tile>
 
-			<mat-grid-tile colspan="1" rowspan="1">
-				Delete
-			</mat-grid-tile>
+					<mat-grid-tile colspan="10">
+						<mat-form-field appearance="outline">
+							<mat-label>Length</mat-label>
+							<input matInput type="number" required id="'length' + i" formControlName="length">
+						</mat-form-field>
+					</mat-grid-tile>
 
-		</mat-grid-list>
+					<mat-grid-tile colspan="3">
+						<button mat-stroked-button color="primary" (click)="deleteCargo(i)">
+							<mat-icon>clear</mat-icon>
+						</button>
+					</mat-grid-tile>
+				</ng-container>
+
+			</mat-grid-list>
+		</ng-container>
 	</form>
 </ng-template>
 
 <ng-template #doneStep>
-	<h1>You are now done</h1>
-	<h2>Do you want to confirm order?</h2>
+	<h1>Do you want to confirm order?</h1>
 </ng-template>

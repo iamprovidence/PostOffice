@@ -1,2 +1,2 @@
-docker stop docker_postoffice.mongo_1
-docker stop docker_postoffice.redis_1
+docker stop infrastructure_postoffice.mongo_1
+docker stop infrastructure_postoffice.redis_1

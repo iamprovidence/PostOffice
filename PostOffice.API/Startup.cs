@@ -5,7 +5,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PostOffice.API.Configurations;
 using PostOffice.API.Hubs;
-using StackExchange.Redis;
+using PostOffice.Application.Common.Idempotency;
+using PostOffice.Application.Common.Persistence;
+using PostOffice.Infrastructure.Configuration;
+using PostOffice.Infrastructure.Idempotency;
+using PostOffice.Infrastructure.Persistence;
 using System;
 
 namespace PostOffice.API
@@ -23,6 +27,7 @@ namespace PostOffice.API
 
 		public IServiceProvider ConfigureServices(IServiceCollection services)
 		{
+			// TODO: regrooup services
 			services.AddCors();
 			services.AddSignalR();
 			services.AddMediatR(typeof(Application.Common.Identity.IUserContext).Assembly);
@@ -35,6 +40,22 @@ namespace PostOffice.API
 				options.Configuration = redisConnectionString;
 			});
 
+			// TODO: move to separate class
+			services.Configure<MongoDbContextConfiguration>(option =>
+			{
+				// TODO: get from config file
+				option.ConnectionString = "mongodb://192.168.99.100";
+				option.DatabaseName = "PostOffice";
+			});
+
+			services.AddUserContext(_configuration);
+
+			services.AddScoped<MongoContext>();
+			services.AddScoped<IOrderRepository, OrderRepository>();
+
+			services.AddScoped<IConnectionManager, ConnectionManager>();
+
+
 			services.AddHealthChecks(_configuration);
 
 			return services.BuildServiceProvider(validateScopes: true);
@@ -42,6 +63,7 @@ namespace PostOffice.API
 
 		public void Configure(IApplicationBuilder app)
 		{
+			app.UseRouting();
 			app.UseCors(configuration =>
 			{
 				configuration
@@ -49,9 +71,7 @@ namespace PostOffice.API
 					.AllowAnyMethod()
 					.AllowAnyOrigin();
 			});
-
-			app.UseRouting();
-
+			app.UseUserContext(_environment);
 			app.UseHealthChecks(_environment);
 			app.UseEndpoints(endpoints =>
 			{
