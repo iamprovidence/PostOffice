@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "start": "cd ClientApp && npm run-script start",
+    "install": "cd ClientApp && npm run-script install-dependencies"
+  }
+}

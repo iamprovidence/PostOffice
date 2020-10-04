@@ -8,8 +8,6 @@ namespace PostOffice.Infrastructure.Persistence.Configurations
 	{
 		protected override void Configure(BsonClassMap<Order> builder)
 		{
-			builder.AutoMap();
-
 			builder.MapProperty(x => x.Identifier);
 			builder.MapProperty(x => x.Price);
 			builder.MapProperty(x => x.Description);

@@ -25,6 +25,8 @@ namespace PostOffice.API.Hubs
 		{
 			_serviceProvider = serviceProvider;
 
+			InitializeRequest();
+
 			_mediator = new Lazy<IMediator>(InitService<IMediator>);
 			_connectionManager = new Lazy<IConnectionManager>(InitService<IConnectionManager>);
 			_userContext = new Lazy<IReadOnlyUserContext>(InitService<IReadOnlyUserContext>);
@@ -34,6 +36,12 @@ namespace PostOffice.API.Hubs
 		{
 			return _serviceProvider.GetRequiredService<TService>();
 		}
+
+		private void InitializeRequest()
+		{
+			InitService<IRequestContextInitializer>().SetCallerType(GetType());
+		}
+
 
 		public IMediator Mediator => _mediator.Value;
 		public IConnectionManager ConnectionManager => _connectionManager.Value;

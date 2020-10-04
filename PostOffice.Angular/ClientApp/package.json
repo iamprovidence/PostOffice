@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --open",
+    "install-dependencies": "npm i",
     "build": "ng build",
     "lint": "ng lint"
   },
