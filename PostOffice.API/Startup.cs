@@ -5,10 +5,16 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PostOffice.API.Configurations;
 using PostOffice.API.Hubs;
+using PostOffice.API.ServerSideEvents;
 using PostOffice.Application.Common.Idempotency;
+using PostOffice.Application.Common.IntegrationEvents;
+using PostOffice.Application.Common.OutputPort;
 using PostOffice.Application.Common.Persistence;
+using PostOffice.Application.Orders.Events;
 using PostOffice.Infrastructure.Configuration;
 using PostOffice.Infrastructure.Idempotency;
+using PostOffice.Infrastructure.IntegrationEvents;
+using PostOffice.Infrastructure.OutputPort;
 using PostOffice.Infrastructure.Persistence;
 using System;
 
@@ -27,6 +33,7 @@ namespace PostOffice.API
 
 		public IServiceProvider ConfigureServices(IServiceCollection services)
 		{
+			// TODO: use autofac here
 			// TODO: regrooup services
 			services.AddCors();
 			services.AddSignalR();
@@ -53,7 +60,17 @@ namespace PostOffice.API
 			services.AddScoped<MongoContext>();
 			services.AddScoped<IOrderRepository, OrderRepository>();
 
-			services.AddScoped<IConnectionManager, ConnectionManager>();
+			services.AddSingleton<IConnectionManager, ConnectionManager>();
+
+			services.AddScoped<SignalRRequestContext>();
+			services.AddScoped<IRequestContextAccessor, SignalRRequestContext>(sp => sp.GetRequiredService<SignalRRequestContext>());
+			services.AddScoped<IRequestContextInitializer, SignalRRequestContext>(sp => sp.GetRequiredService<SignalRRequestContext>());
+
+			// TODO: move to separate class
+			services.AddScoped(typeof(IOutputContext<>), typeof(SignalROutputContext<>));
+
+			services.AddSingleton<IEventBus, InMemoryEventBus>();
+			services.AddScoped<OrderDeletedEventHandler>();
 
 
 			services.AddHealthChecks(_configuration);
@@ -71,6 +88,11 @@ namespace PostOffice.API
 					.AllowAnyMethod()
 					.AllowAnyOrigin();
 			});
+
+			IEventBus eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
+
+			eventBus.Subscribe<OrderDeletedIntegrationEvent, OrderDeletedEventHandler>();
+
 			app.UseUserContext(_environment);
 			app.UseHealthChecks(_environment);
 			app.UseEndpoints(endpoints =>

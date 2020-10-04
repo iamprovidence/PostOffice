@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { FormControl, FormGroup, Validators, FormArray } from "@angular/forms";
+import { FormArray, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Cargo } from '@modules/employee-page/models/cargo.model';
 import { EditOrder } from '@modules/employee-page/models/edit-order.model.ts';
 import { BaseEditForm } from "@shared/form/base-edit-form";
@@ -7,9 +7,9 @@ import { Observable, of } from 'rxjs';
 
 @Injectable()
 export class CreateOrderEditForm extends BaseEditForm<EditOrder> {
-	public form: FormGroup;
-
 	private static readonly MIN_LENGTH = 3;
+
+	public form: FormGroup;
 
 	public description = new FormControl('');
 	public senderCity = new FormControl('', [Validators.required, Validators.minLength(CreateOrderEditForm.MIN_LENGTH)]);
@@ -29,7 +29,6 @@ export class CreateOrderEditForm extends BaseEditForm<EditOrder> {
 	public cargoFormGroup = new FormGroup({
 		cargos: this.cargos,
 	});
-
 
 	public patchValue(value: EditOrder): void {
 		if (value === null) return;

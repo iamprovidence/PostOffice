@@ -1,18 +1,35 @@
 using MediatR;
-using PostOffice.Application.Orders.ViewModels;
-using System.Collections.Generic;
+using PostOffice.Application.Common.OutputPort;
+using PostOffice.Application.Common.Persistence;
+using PostOffice.Application.Orders.Outputs;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace PostOffice.Application.Orders
 {
-	public class GetOrderListInput : IRequest<IReadOnlyCollection<OrderListItemViewModel>> { }
+	public class GetOrderListInput : IRequest { }
 
-	public class GetOrderListHandler : IRequestHandler<GetOrderListInput, IReadOnlyCollection<OrderListItemViewModel>>
+	public class GetOrderListHandler : IRequestHandler<GetOrderListInput, Unit>
 	{
-		public Task<IReadOnlyCollection<OrderListItemViewModel>> Handle(GetOrderListInput request, CancellationToken cancellationToken)
+		private readonly IOrderRepository _orderRepository;
+		private readonly IOutputContext<IOrderOutput> _orderOutput;
+
+		public GetOrderListHandler(
+			IOrderRepository orderRepository,
+			IOutputContext<IOrderOutput> orderOutput
+			)
 		{
-			throw new System.NotImplementedException();
+			_orderRepository = orderRepository;
+			_orderOutput = orderOutput;
+		}
+
+		public async Task<Unit> Handle(GetOrderListInput request, CancellationToken cancellationToken)
+		{
+			var orders = await _orderRepository.FindOrdersAsync(cancellationToken);
+
+			await _orderOutput.ResponseWith().OrdersLoaded(orders);
+
+			return Unit.Value;
 		}
 	}
 }

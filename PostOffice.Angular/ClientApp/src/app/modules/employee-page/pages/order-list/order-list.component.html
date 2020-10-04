@@ -1,0 +1,47 @@
+<table mat-table [dataSource]="orderList" class="mat-elevation-z8">
+
+	<ng-container *ngLet="['ttn', 'status', 'description', 'currentLocation', 'actions'] as displayedColumn">
+		<tr mat-header-row *matHeaderRowDef="displayedColumn"></tr>
+		<tr mat-row *matRowDef="let row; columns: displayedColumn;"></tr>
+	</ng-container>
+
+	<!-- ttn -->
+	<ng-container matColumnDef="ttn">
+		<th mat-header-cell *matHeaderCellDef> TTN </th>
+		<td mat-cell *matCellDef="let element"> {{ element.ttn }} </td>
+	</ng-container>
+
+	<!-- status -->
+	<ng-container matColumnDef="status">
+		<th mat-header-cell *matHeaderCellDef> Status </th>
+		<!--TODO: show icon with tooltip-->
+		<td mat-cell *matCellDef="let element"> {{ element.status }} </td>
+	</ng-container>
+
+	<!-- description -->
+	<ng-container matColumnDef="description">
+		<th mat-header-cell *matHeaderCellDef> Description </th>
+		<td mat-cell *matCellDef="let element"> {{ element.description }} </td>
+	</ng-container>
+
+	<!-- current location -->
+	<ng-container matColumnDef="currentLocation">
+		<!--TODO: add icons and split into two rows-->
+		<th mat-header-cell *matHeaderCellDef> Current location </th>
+		<td mat-cell *matCellDef="let element"> {{ element.currentLocation.city }}:{{ element.currentLocation.street }} </td>
+	</ng-container>
+
+	<!-- Actions -->
+	<ng-container matColumnDef="actions">
+		<th mat-header-cell *matHeaderCellDef> Actions </th>
+		<td mat-cell *matCellDef="let element">
+			<button mat-stroked-button color="primary" [matMenuTriggerFor]="menu">Menu</button>
+			<mat-menu #menu="matMenu">
+				<!--TODO: add edit-->
+				<!--<button mat-menu-item>Edit location</button>-->
+				<button mat-menu-item (click)="delete(element.ttn)">Delete</button>
+			</mat-menu>
+		</td>
+	</ng-container>
+
+</table>

@@ -6,7 +6,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatTableModule } from '@angular/material/table';
 
 const modules = [
 	TextFieldModule,
@@ -17,6 +19,8 @@ const modules = [
 	MatGridListModule,
 	MatIconModule,
 	MatStepperModule,
+	MatTableModule,
+	MatMenuModule,
 ];
 
 @NgModule({

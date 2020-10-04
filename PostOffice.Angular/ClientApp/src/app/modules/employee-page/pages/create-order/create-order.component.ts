@@ -1,8 +1,9 @@
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
-import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
+import { Component, NgZone, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { OrderDataService } from '@modules/employee-page/services/order-data.service';
-import { take, switchMap } from 'rxjs/operators';
+import { BaseComponent } from '@shared/components/base-component';
+import { switchMap, take, takeUntil } from 'rxjs/operators';
 import { CreateOrderEditForm } from './create-order-edit-form';
 
 @Component({
@@ -11,7 +12,7 @@ import { CreateOrderEditForm } from './create-order-edit-form';
 	styleUrls: ['./create-order.component.sass'],
 	providers: [CreateOrderEditForm],
 })
-export class CreateOrderComponent implements OnInit {
+export class CreateOrderComponent extends BaseComponent {
 
 	@ViewChild('autosize')
 	public autosize: CdkTextareaAutosize;
@@ -21,20 +22,22 @@ export class CreateOrderComponent implements OnInit {
 		private router: Router,
 		private orderDataService: OrderDataService,
 		public editForm: CreateOrderEditForm,
-	) { }
-
-	public ngOnInit(): void { }
+	) {
+		super();
+	}
 
 	public triggerResize(): void {
 		// Wait for changes to be applied, then trigger textarea resize.
 		this.ngZone
 			.onStable
-			.pipe(take(1))
+			.pipe(
+				take(1),
+				takeUntil(this.$unsubscribe),
+			)
 			.subscribe(() => this.autosize.resizeToFitContent(true));
 	}
 
 	public addNewCargo(): void {
-		console.log(this.editForm)
 		this.editForm.addCargo(null);
 	}
 
@@ -46,7 +49,8 @@ export class CreateOrderComponent implements OnInit {
 		this.editForm
 			.getValue()
 			.pipe(
-				switchMap((editOrderItem) => this.orderDataService.registerOrder(editOrderItem)),
+				takeUntil(this.$unsubscribe),
+				switchMap(editOrderItem => this.orderDataService.registerOrder(editOrderItem)),
 			)
 			.subscribe(didSucceed => {
 				if (didSucceed) {

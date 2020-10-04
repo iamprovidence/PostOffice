@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ChooseActionComponent } from "./pages/choose-action/choose-action.component";
 import { CreateOrderComponent } from "./pages/create-order/create-order.component";
 import { OrderCreatedComponent } from "./pages/order-created/order-created.component";
+import { OrderListComponent } from "./pages/order-list/order-list.component";
 
 const routes: Routes = [
 	{
@@ -31,6 +32,14 @@ const routes: Routes = [
 		},
 	},
 	{
+		path: 'order-list',
+		component: OrderListComponent,
+		data: {
+			depth: "0",
+			animation: 'AboutPage',
+		},
+	},
+	{
 		path: 'order-created',
 		component: OrderCreatedComponent,
 		data: {
@@ -45,5 +54,5 @@ const routes: Routes = [
 	exports: [RouterModule],
 })
 export class RoutingModule {
-	public static components = [ChooseActionComponent, CreateOrderComponent, OrderCreatedComponent];
+	public static components = [ChooseActionComponent, CreateOrderComponent, OrderCreatedComponent, OrderListComponent];
 }
