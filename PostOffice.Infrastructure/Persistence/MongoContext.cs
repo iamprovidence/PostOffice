@@ -1,7 +1,6 @@
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using PostOffice.Core.Entities;
-using PostOffice.Infrastructure.Configuration;
 using PostOffice.Infrastructure.Persistence.Configurations.Abstract;
 using System;
 using System.Collections.Generic;

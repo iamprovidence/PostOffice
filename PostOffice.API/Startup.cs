@@ -11,7 +11,7 @@ using PostOffice.Application.Common.IntegrationEvents;
 using PostOffice.Application.Common.OutputPort;
 using PostOffice.Application.Common.Persistence;
 using PostOffice.Application.Orders.Events;
-using PostOffice.Infrastructure.Configuration;
+using PostOffice.Infrastructure.HealthChecks;
 using PostOffice.Infrastructure.Idempotency;
 using PostOffice.Infrastructure.IntegrationEvents;
 using PostOffice.Infrastructure.OutputPort;
@@ -80,7 +80,6 @@ namespace PostOffice.API
 
 		public void Configure(IApplicationBuilder app)
 		{
-			app.UseRouting();
 			app.UseCors(configuration =>
 			{
 				configuration
@@ -88,6 +87,7 @@ namespace PostOffice.API
 					.AllowAnyMethod()
 					.AllowAnyOrigin();
 			});
+			app.UseRouting();
 
 			IEventBus eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
 

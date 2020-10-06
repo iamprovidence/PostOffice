@@ -1,4 +1,4 @@
-namespace PostOffice.Infrastructure.Configuration
+namespace PostOffice.Infrastructure.Persistence
 {
 	public class MongoDbContextConfiguration
 	{

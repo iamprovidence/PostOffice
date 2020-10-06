@@ -2,9 +2,9 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace PostOffice.Core.HealthChecks
+namespace PostOffice.Infrastructure.HealthChecks.Models
 {
-	public class HealthCheck
+	internal class HealthCheck
 	{
 
 		[JsonConverter(typeof(StringEnumConverter))]
