@@ -3,9 +3,9 @@ using StackExchange.Redis;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace PostOffice.Infrastructure.Configuration
+namespace PostOffice.Infrastructure.HealthChecks
 {
-	public class RedisHealthCheck : IHealthCheck
+	internal class RedisHealthCheck : IHealthCheck
 	{
 		private readonly IConnectionMultiplexer _connectionMultiplexer;
 

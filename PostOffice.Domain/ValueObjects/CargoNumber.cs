@@ -6,7 +6,7 @@ namespace PostOffice.Domain.ValueObjects
 {
 	public class CargoNumber : ValueObjectBase
 	{
-		public Guid Number { get; }
+		public Guid Number { get; private set; }
 
 		private CargoNumber(Guid number)
 		{

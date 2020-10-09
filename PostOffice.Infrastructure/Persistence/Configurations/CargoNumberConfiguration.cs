@@ -1,4 +1,5 @@
 using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Serializers;
 using PostOffice.Domain.ValueObjects;
 using PostOffice.Infrastructure.Persistence.Configurations.Abstract;
 
@@ -8,9 +9,7 @@ namespace PostOffice.Infrastructure.Persistence.Configurations
 	{
 		protected override void Configure(BsonClassMap<CargoNumber> builder)
 		{
-			builder.AutoMap();
-
-			builder.MapProperty(x => x.Number);
+			builder.MapProperty(x => x.Number).SetSerializer(new GuidSerializer());
 		}
 	}
 }

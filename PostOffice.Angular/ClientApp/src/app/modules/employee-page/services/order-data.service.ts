@@ -1,24 +1,27 @@
-import { Injectable, OnDestroy, EventEmitter } from '@angular/core';
+import { EventEmitter, Injectable, OnDestroy } from '@angular/core';
 import { Location } from '@app/core/api/models/location';
 import { CreateOrderRequest } from '@app/core/api/models/orders/create-order-request';
+import { DeleteOrderRequest } from '@app/core/api/models/orders/delete-order-request';
+import { EditOrderLocationRequest } from '@app/core/api/models/orders/edit-order-location-request';
 import { OrderListItem } from '@app/core/api/models/orders/order-list-item';
+import { OrderLocationChanged } from '@app/core/api/models/orders/order-location-changed';
 import { OrderApiService } from '@app/core/api/services/order-api.service';
 import { Observable } from 'rxjs';
 import { EditOrder } from '../models/edit-order.model';
-import { DeleteOrderRequest } from '@app/core/api/models/orders/delete-order-request';
 
 @Injectable()
 export class OrderDataService implements OnDestroy {
 
 	public readonly orderDeleted = new EventEmitter<string>();
+	public readonly orderLocationChanged = new EventEmitter<OrderLocationChanged>();
 
 	constructor(private orderApiService: OrderApiService) {
 		console.warn("ctor");
 
 		this.orderApiService.connect();
 
-		this.orderApiService.orderDeleted
-			.subscribe((ttn: string) => this.orderDeleted.next(ttn))
+		this.orderApiService.orderDeleted.subscribe((ttn: string) => this.orderDeleted.next(ttn))
+		this.orderApiService.orderLocationChanged.subscribe((model: OrderLocationChanged) => this.orderLocationChanged.next(model))
 	}
 
 	public ngOnDestroy(): void {
@@ -30,6 +33,16 @@ export class OrderDataService implements OnDestroy {
 	public getOrders(): Observable<OrderListItem[]> {
 		return this.orderApiService.getOrders();
 	}
+
+	public editOrderLocation(ttn: string, newLocation: Location): Observable<void> {
+		const request: EditOrderLocationRequest = {
+			ttn: ttn,
+			newLocation: newLocation,
+		};
+
+		return this.orderApiService.changeOrderLocation(request);
+	}
+
 
 	public deleteOrder(ttn: string): Observable<void> {
 		const request: DeleteOrderRequest = {

@@ -4,9 +4,9 @@ using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 
-namespace PostOffice.Core.HealthChecks
+namespace PostOffice.Infrastructure.HealthChecks.Models
 {
-	public class HealthCheckResponse
+	internal class HealthCheckResponse
 	{
 		[JsonConverter(typeof(StringEnumConverter))]
 		public HealthStatus Status { get; set; }

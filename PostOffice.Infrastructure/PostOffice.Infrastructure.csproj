@@ -6,9 +6,14 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PostOffice.Application\PostOffice.Application.csproj" />
+    <ProjectReference Include="..\PostOffice.Utilities\PostOffice.Utilities.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AspNetCore.HealthChecks.MongoDb" Version="3.1.2" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI" Version="3.1.3" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="3.1.2" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI.InMemory.Storage" Version="3.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
     <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="3.1.6" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="3.1.8" />

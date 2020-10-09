@@ -8,7 +8,7 @@
 	<button mat-stroked-button type="button" color="secondary" (click)="reject()">
 		{{  data.rejectionText }}
 	</button>
-	<button mat-raised-button type="button" color="primary" (click)="confirm()">
+	<button mat-raised-button cdkFocusInitial type="button" color="primary" (click)="confirm()">
 		{{ data.confirmationText }}
 	</button>
 </mat-dialog-actions>

@@ -6,8 +6,8 @@ namespace PostOffice.Domain.ValueObjects
 {
 	public class Money : ValueObjectBase
 	{
-		private decimal Amount { get; }
-		private Currency Currency { get; }
+		private decimal Amount { get; set; }
+		private Currency Currency { get; set; }
 
 		public Money(decimal amount, Currency currency)
 		{

@@ -38,6 +38,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 		Infrastructure\stop.cmd = Infrastructure\stop.cmd
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostOffice.Utilities", "PostOffice.Utilities\PostOffice.Utilities.csproj", "{573D0718-3FD1-4BF7-9EB5-3BDEB8904874}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,6 +70,10 @@ Global
 		{3D0AA3DE-877F-4C8A-AE8B-74B0926CAAF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D0AA3DE-877F-4C8A-AE8B-74B0926CAAF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D0AA3DE-877F-4C8A-AE8B-74B0926CAAF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{573D0718-3FD1-4BF7-9EB5-3BDEB8904874}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{573D0718-3FD1-4BF7-9EB5-3BDEB8904874}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{573D0718-3FD1-4BF7-9EB5-3BDEB8904874}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{573D0718-3FD1-4BF7-9EB5-3BDEB8904874}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

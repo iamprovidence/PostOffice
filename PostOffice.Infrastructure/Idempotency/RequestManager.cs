@@ -17,7 +17,6 @@ namespace PostOffice.Infrastructure.Idempotency
 			_cache = cache;
 		}
 
-
 		public async Task<bool> ExistAsync(Guid id)
 		{
 			var request = await GetAsync<ClientRequest>(id.ToString());

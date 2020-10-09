@@ -10,7 +10,7 @@ namespace PostOffice.Domain.ValueObjects
 	{
 		private static readonly int TTN_LENGTH = 16;
 
-		public string Value { get; }
+		public string Value { get; private set; }
 
 		public TTN(string value)
 		{

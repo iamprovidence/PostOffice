@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatTableModule } from '@angular/material/table';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const modules = [
 	TextFieldModule,
@@ -21,6 +22,7 @@ const modules = [
 	MatStepperModule,
 	MatTableModule,
 	MatMenuModule,
+	MatDialogModule,
 ];
 
 @NgModule({

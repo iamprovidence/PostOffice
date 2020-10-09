@@ -54,5 +54,5 @@ const routes: Routes = [
 	exports: [RouterModule],
 })
 export class RoutingModule {
-	public static components = [ChooseActionComponent, CreateOrderComponent, OrderCreatedComponent, OrderListComponent];
+	public static pages = [ChooseActionComponent, CreateOrderComponent, OrderCreatedComponent, OrderListComponent];
 }

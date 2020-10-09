@@ -1,4 +1,5 @@
 using MediatR;
+using MediatR.Pipeline;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -6,16 +7,18 @@ using Microsoft.Extensions.DependencyInjection;
 using PostOffice.API.Configurations;
 using PostOffice.API.Hubs;
 using PostOffice.API.ServerSideEvents;
+using PostOffice.Application.Common.Behaviours;
 using PostOffice.Application.Common.Idempotency;
 using PostOffice.Application.Common.IntegrationEvents;
 using PostOffice.Application.Common.OutputPort;
 using PostOffice.Application.Common.Persistence;
 using PostOffice.Application.Orders.Events;
-using PostOffice.Infrastructure.Configuration;
+using PostOffice.Infrastructure.HealthChecks;
 using PostOffice.Infrastructure.Idempotency;
 using PostOffice.Infrastructure.IntegrationEvents;
 using PostOffice.Infrastructure.OutputPort;
 using PostOffice.Infrastructure.Persistence;
+using StackExchange.Redis;
 using System;
 
 namespace PostOffice.API
@@ -39,11 +42,16 @@ namespace PostOffice.API
 			services.AddSignalR();
 			services.AddMediatR(typeof(Application.Common.Identity.IUserContext).Assembly);
 
-			var redisConnectionString = _configuration.GetValue<string>("Redis:ConnectionString");
-			//services.AddSingleton<IConnectionMultiplexer>(_ => ConnectionMultiplexer.Connect(redisConnectionString));
+			services.AddTransient(typeof(IRequestPreProcessor<>), typeof(LoggingBehaviour<>));
+			services.AddTransient(typeof(IPipelineBehavior<,>), typeof(PerformanceBehaviour<,>));
+			services.AddTransient(typeof(IPipelineBehavior<,>), typeof(TransactionBehaviour<,>));
+
 			services.AddDistributedMemoryCache();
+			var redisConnectionString = _configuration.GetValue<string>("Redis:ConnectionString");
+			services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(redisConnectionString));
 			services.AddStackExchangeRedisCache(options =>
 			{
+				options.InstanceName = "master";
 				options.Configuration = redisConnectionString;
 			});
 
@@ -58,9 +66,12 @@ namespace PostOffice.API
 			services.AddUserContext(_configuration);
 
 			services.AddScoped<MongoContext>();
+			services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<MongoContext>());
 			services.AddScoped<IOrderRepository, OrderRepository>();
 
 			services.AddSingleton<IConnectionManager, ConnectionManager>();
+			services.AddScoped<ILockService, DistributedLockService>();
+
 
 			services.AddScoped<SignalRRequestContext>();
 			services.AddScoped<IRequestContextAccessor, SignalRRequestContext>(sp => sp.GetRequiredService<SignalRRequestContext>());
@@ -80,7 +91,6 @@ namespace PostOffice.API
 
 		public void Configure(IApplicationBuilder app)
 		{
-			app.UseRouting();
 			app.UseCors(configuration =>
 			{
 				configuration
@@ -88,6 +98,7 @@ namespace PostOffice.API
 					.AllowAnyMethod()
 					.AllowAnyOrigin();
 			});
+			app.UseRouting();
 
 			IEventBus eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
 
