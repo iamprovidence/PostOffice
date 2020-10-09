@@ -9,5 +9,6 @@ namespace PostOffice.Application.Orders.Outputs
 	{
 		Task OrdersLoaded(IEnumerable<OrderListItemViewModel> orderList);
 		Task OrderDeleted(string ttn);
+		Task OrderLocationChanged(OrderLocationChangedViewModel viewModel);
 	}
 }

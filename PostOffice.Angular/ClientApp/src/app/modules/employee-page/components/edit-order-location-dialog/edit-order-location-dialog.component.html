@@ -1,0 +1,61 @@
+<h1 mat-dialog-title>
+	Edit order location
+</h1>
+
+<div mat-dialog-content>
+	<h2>{{ data.ttn }}</h2>
+
+	<mat-grid-list cols="2" rowHeight="5:1">
+
+		<mat-grid-tile>
+			<span>
+				Current location
+			</span>
+		</mat-grid-tile>
+
+		<mat-grid-tile>
+			<span>
+				New location
+			</span>
+		</mat-grid-tile>
+
+		<mat-grid-tile>
+			<mat-form-field appearance="outline">
+				<mat-label>City</mat-label>
+				<input matInput [(ngModel)]="data.currentLocation.city" disabled>
+			</mat-form-field>
+		</mat-grid-tile>
+
+		<mat-grid-tile>
+			<mat-form-field appearance="outline">
+				<mat-label>City</mat-label>
+				<input matInput [(ngModel)]="city" cdkFocusInitial>
+			</mat-form-field>
+		</mat-grid-tile>
+
+		<mat-grid-tile>
+			<mat-form-field appearance="outline">
+				<mat-label>Street</mat-label>
+				<input matInput [(ngModel)]="data.currentLocation.street" disabled>
+			</mat-form-field>
+		</mat-grid-tile>
+
+		<mat-grid-tile>
+			<mat-form-field appearance="outline">
+				<mat-label>Street</mat-label>
+				<input matInput [(ngModel)]="street">
+			</mat-form-field>
+		</mat-grid-tile>
+
+	</mat-grid-list>
+</div>
+
+<div mat-dialog-actions class="dialog-actions">
+	<button mat-stroked-button (click)="onCancelClick()">Cancel</button>
+	<button mat-raised-button
+					color="primary"
+					[disabled]="!city || !street"
+					(click)="onUpdateClick()">
+		Update
+	</button>
+</div>

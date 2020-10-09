@@ -10,6 +10,8 @@ namespace PostOffice.Infrastructure.Persistence.Configurations
 		{
 			builder.AutoMap();
 
+			builder.MapCreator(x => new TTN(x.Value));
+
 			builder.MapProperty(x => x.Value);
 		}
 	}

@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PostOffice.Application\PostOffice.Application.csproj" />
+    <ProjectReference Include="..\PostOffice.Utilities\PostOffice.Utilities.csproj" />
   </ItemGroup>
 
   <ItemGroup>

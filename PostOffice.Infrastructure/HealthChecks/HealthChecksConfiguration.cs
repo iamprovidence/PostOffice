@@ -18,11 +18,11 @@ namespace PostOffice.Infrastructure.HealthChecks
 		{
 			services
 				.AddHealthChecks()
+				.AddCheck<RedisHealthCheck>(name: "Redis")
 				.AddMongoDb(
 					mongodbConnectionString: configuration.GetValue<string>("MongoDb:ConnectionString"),
 					name: "Mongo",
 					failureStatus: HealthStatus.Unhealthy);
-			//.AddCheck<RedisHealthCheck>(name: "Redis");
 
 			services
 				.AddHealthChecksUI(opt =>

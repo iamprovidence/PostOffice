@@ -26,5 +26,10 @@ namespace PostOffice.API.Hubs
 		{
 			Mediator.Send(command); // fire and forget
 		}
+
+		public async void ChangeOrderLocation(EditOrderLocationInput command)
+		{
+			Mediator.Send(command);
+		}
 	}
 }

@@ -38,7 +38,7 @@
 			<button mat-stroked-button color="primary" [matMenuTriggerFor]="menu">Menu</button>
 			<mat-menu #menu="matMenu">
 				<!--TODO: add edit-->
-				<!--<button mat-menu-item>Edit location</button>-->
+				<button mat-menu-item (click)="editLocation(element)">Edit location</button>
 				<button mat-menu-item (click)="delete(element.ttn)">Delete</button>
 			</mat-menu>
 		</td>

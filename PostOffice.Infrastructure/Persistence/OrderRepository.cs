@@ -3,6 +3,7 @@ using PostOffice.Application.Common.Persistence;
 using PostOffice.Application.Common.ViewModels;
 using PostOffice.Application.Orders.ViewModels;
 using PostOffice.Domain.Entities;
+using PostOffice.Domain.ValueObjects;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,10 +12,12 @@ namespace PostOffice.Infrastructure.Persistence
 {
 	public class OrderRepository : IOrderRepository
 	{
+		private readonly MongoContext _mongoContext;
 		private readonly IMongoCollection<Order> _orderCollection;
 
 		public OrderRepository(MongoContext mongoContext)
 		{
+			_mongoContext = mongoContext;
 			_orderCollection = mongoContext.Collection<Order>();
 		}
 
@@ -25,14 +28,21 @@ namespace PostOffice.Infrastructure.Persistence
 				BypassDocumentValidation = false,
 			};
 
-			return _orderCollection.InsertOneAsync(order, options, cancellationToken);
+			return _orderCollection.InsertOneAsync(_mongoContext.Session, order, options, cancellationToken);
 		}
 
 		public async Task<bool> DeleteAsync(string ttn, CancellationToken cancellationToken)
 		{
-			var deleteResult = await _orderCollection.DeleteOneAsync(x => x.Identifier.Value == ttn, cancellationToken);
+			var deleteResult = await _orderCollection.DeleteOneAsync(_mongoContext.Session, x => x.Identifier.Value == ttn, cancellationToken: cancellationToken);
 
 			return deleteResult.DeletedCount > 0;
+		}
+
+		public Task<Order> FindOrderAsync(TTN ttn, CancellationToken cancellationToken)
+		{
+			var filter = Builders<Order>.Filter.Eq(x => x.Identifier.Value, ttn.Value);
+
+			return _orderCollection.Find(_mongoContext.Session, filter).SingleAsync(cancellationToken);
 		}
 
 		public async Task<IReadOnlyCollection<OrderListItemViewModel>> FindOrdersAsync(CancellationToken cancellationToken)
@@ -52,9 +62,16 @@ namespace PostOffice.Infrastructure.Persistence
 			});
 
 			return await _orderCollection
-				.Find(filter)
+				.Find(_mongoContext.Session, filter)
 				.Project(projection)
 				.ToListAsync(cancellationToken);
+		}
+
+		public Task UpdateAsync(Order order, CancellationToken cancellationToken)
+		{
+			var filter = Builders<Order>.Filter.Eq(x => x.Identifier.Value, order.Identifier.Value);
+
+			return _orderCollection.ReplaceOneAsync(_mongoContext.Session, filter, order, cancellationToken: cancellationToken);
 		}
 	}
 }

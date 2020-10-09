@@ -14,6 +14,11 @@ namespace PostOffice.API
 		public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
 			WebHost
 				.CreateDefaultBuilder(args)
-				.UseStartup<Startup>();
+				.UseStartup<Startup>()
+				.UseDefaultServiceProvider(configure =>
+				{
+					configure.ValidateOnBuild = true;
+					configure.ValidateScopes = true;
+				});
 	}
 }

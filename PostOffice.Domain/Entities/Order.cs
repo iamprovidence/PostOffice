@@ -12,16 +12,16 @@ namespace PostOffice.Domain.Entities
 	[Table("Orders")]
 	public class Order : IEntity<TTN>, IAggregateRoot
 	{
-		public TTN Identifier { get; }
-		public Money Price { get; }
-		public string Description { get; }
+		public TTN Identifier { get; private set; }
+		public Money Price { get; private set; }
+		public string Description { get; private set; }
 		public OrderStatus Status { get; private set; }
 
-		public Location SenderLocation { get; }
-		public Location RecipientLocation { get; }
-		public Location CurrentLocation { get; }
+		public Location SenderLocation { get; private set; }
+		public Location RecipientLocation { get; private set; }
+		public Location CurrentLocation { get; private set; }
 
-		private readonly ISet<Cargo> _cargos;
+		private ISet<Cargo> _cargos;
 		public ICollection<Cargo> Cargos => _cargos;
 
 		protected Order(
@@ -87,6 +87,17 @@ namespace PostOffice.Domain.Entities
 			}
 
 			Status = OrderStatus.Canceled;
+
+			// TODO: AddEvent
+		}
+
+
+		public void ChangeLocation(Location newLocation)
+		{
+			CurrentLocation = newLocation;
+
+			if (CurrentLocation != SenderLocation) Status = OrderStatus.Delivering;
+			if (CurrentLocation == RecipientLocation) Status = OrderStatus.Delivered;
 
 			// TODO: AddEvent
 		}
