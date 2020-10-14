@@ -1,3 +1,3 @@
-docker-compose -f docker-compose.yml up -d
+docker-compose -f docker-compose.yml -f docker-compose.development.yml up -d
 docker ps
 pause

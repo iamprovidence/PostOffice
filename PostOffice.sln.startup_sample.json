@@ -1,0 +1,29 @@
+{
+  "Version": 3,
+  "ListAllProjects": false,
+  "MultiProjectConfigurations": {
+    "API": {
+      "Projects": {
+        "PostOffice.API": {}
+      }
+    },
+    "SmsSender": {
+      "Projects": {
+        "PostOffice.SmsSender": {}
+      }
+    },
+    "Develop": {
+      "Projects": {
+        "PostOffice.API": {},
+        "PostOffice.SmsSender": {}
+      }
+    },
+    "Staging": {
+      "Projects": {
+        "PostOffice.Angular": {},
+        "PostOffice.API": {},
+        "PostOffice.SmsSender": {}
+      }
+    }
+  }
+}

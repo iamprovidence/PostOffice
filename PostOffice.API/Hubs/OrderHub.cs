@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using PostOffice.Application.Common.Network;
 using PostOffice.Application.Orders;
-using PostOffice.Application.Orders.Outputs;
+using PostOffice.Application.Orders.Interfaces;
 using PostOffice.Infrastructure.Network;
 using System;
 using System.Threading.Tasks;

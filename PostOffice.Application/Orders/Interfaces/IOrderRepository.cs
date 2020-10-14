@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace PostOffice.Application.Common.Persistence
+namespace PostOffice.Application.Orders.Interfaces
 {
 	public interface IOrderRepository : IRepository<Order>
 	{

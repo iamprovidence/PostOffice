@@ -1,3 +1,8 @@
+### Custom configuration ###
+
+.env
+PostOffice.sln.startup.json
+
 ### Angular ###
 
 # compiled output

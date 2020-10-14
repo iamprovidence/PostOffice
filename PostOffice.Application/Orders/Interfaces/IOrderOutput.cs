@@ -3,7 +3,7 @@ using PostOffice.Application.Orders.ViewModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace PostOffice.Application.Orders.Outputs
+namespace PostOffice.Application.Orders.Interfaces
 {
 	public interface IOrderOutput : IOutputPort
 	{

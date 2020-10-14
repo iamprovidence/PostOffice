@@ -8,6 +8,5 @@ namespace PostOffice.Application.Common.Persistence
 		public Task BeginTransactionAsync(CancellationToken cancellationToken);
 		public Task CommitTransactionAsync(CancellationToken cancellationToken);
 		public Task RollbackTransactionAsync(CancellationToken cancellationToken);
-
 	}
 }

@@ -1,7 +1,6 @@
 using MediatR;
 using PostOffice.Application.Common.OutputPort;
-using PostOffice.Application.Common.Persistence;
-using PostOffice.Application.Orders.Outputs;
+using PostOffice.Application.Orders.Interfaces;
 using System.Threading;
 using System.Threading.Tasks;
 

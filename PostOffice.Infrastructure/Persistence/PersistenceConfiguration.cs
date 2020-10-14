@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PostOffice.Application.Common.Persistence;
+using PostOffice.Application.Orders.Interfaces;
 using PostOffice.Infrastructure.Persistence.Repositories;
 using System;
 

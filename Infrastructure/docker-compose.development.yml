@@ -1,0 +1,16 @@
+version: '3.4'
+
+services:
+  postoffice.mongo:
+    ports:
+      - "27017:27017"
+
+  postoffice.redis:
+    ports:
+      - "6379:6379"
+      
+  postoffice.azurestorage:
+    command: "azurite --blobHost 0.0.0.0 --queueHost 0.0.0.0 --loose"
+    ports:
+      - "10000:10000"
+      - "10001:10001"
