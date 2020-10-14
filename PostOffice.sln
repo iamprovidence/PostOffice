@@ -9,17 +9,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostOffice.Angular", "PostO
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{155A838F-23FC-458B-92A4-21D04F586D97}"
 	ProjectSection(SolutionItems) = preProject
-		PostOffice.sln.startup.json = PostOffice.sln.startup.json
-		PostOffice.sln.startup_sample.json = PostOffice.sln.startup_sample.json
-		.env = .env
-		.env_sample = .env_sample
 		.dockerignore = .dockerignore
 		.editorconfig = .editorconfig
+		.env = .env
+		.env_sample = .env_sample
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
 		appveyor.yml = appveyor.yml
 		global.json = global.json
 		package.json = package.json
+		PostOffice.sln.startup.json = PostOffice.sln.startup.json
+		PostOffice.sln.startup_sample.json = PostOffice.sln.startup_sample.json
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -45,9 +45,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostOffice.Utilities", "PostOffice.Utilities\PostOffice.Utilities.csproj", "{573D0718-3FD1-4BF7-9EB5-3BDEB8904874}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostOffice.Application.Common", "PostOffice.Application.Common\PostOffice.Application.Common.csproj", "{FB4A1CA2-F1E8-4640-AFC1-AB40F07C14C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostOffice.Application.Common", "PostOffice.Application.Common\PostOffice.Application.Common.csproj", "{FB4A1CA2-F1E8-4640-AFC1-AB40F07C14C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostOffice.SmsSender", "PostOffice.SmsSender\PostOffice.SmsSender.csproj", "{B161A09C-ACE3-4573-87BC-092AB8F66B8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostOffice.SmsSender", "PostOffice.SmsSender\PostOffice.SmsSender.csproj", "{B161A09C-ACE3-4573-87BC-092AB8F66B8C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{CC6A62F9-CC25-4C28-A994-D4D7BA180FCB}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\clearall.cmd = scripts\clearall.cmd
+		scripts\setup.cmd = scripts\setup.cmd
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
