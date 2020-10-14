@@ -14,12 +14,12 @@ using System.Threading.Tasks;
 
 namespace PostOffice.Infrastructure.Persistence
 {
-	public class MongoContext : IUnitOfWork
+	internal class MongoContext : IUnitOfWork
 	{
 		private readonly MongoClient _mongoClient;
 		private readonly IMongoDatabase _database;
 
-		public MongoContext(IOptions<MongoDbContextConfiguration> options)
+		public MongoContext(IOptions<MongoDbConfiguration> options)
 		{
 			var configuration = options.Value;
 			_mongoClient = new MongoClient(configuration.ConnectionString);

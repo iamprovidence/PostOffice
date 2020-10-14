@@ -1,15 +1,14 @@
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.DependencyInjection;
-using PostOffice.API.Configurations;
-using PostOffice.Application.Common.Idempotency;
 using PostOffice.Application.Common.Identity;
+using PostOffice.Application.Common.Network;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PostOffice.API.Hubs
+namespace PostOffice.Infrastructure.Network
 {
 	[HubConnection(ConnectionType.Notification)]
 	public abstract class HubBase<TClientHub>: Hub<TClientHub>

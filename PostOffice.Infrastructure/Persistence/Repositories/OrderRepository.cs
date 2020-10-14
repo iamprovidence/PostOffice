@@ -8,9 +8,9 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace PostOffice.Infrastructure.Persistence
+namespace PostOffice.Infrastructure.Persistence.Repositories
 {
-	public class OrderRepository : IOrderRepository
+	internal class OrderRepository : IOrderRepository
 	{
 		private readonly MongoContext _mongoContext;
 		private readonly IMongoCollection<Order> _orderCollection;

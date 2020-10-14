@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
-using PostOffice.API.Configurations;
-using PostOffice.Application.Common.Idempotency;
+using PostOffice.Application.Common.Network;
 using PostOffice.Application.Orders;
 using PostOffice.Application.Orders.Outputs;
+using PostOffice.Infrastructure.Network;
 using System;
 using System.Threading.Tasks;
 
@@ -16,10 +16,16 @@ namespace PostOffice.API.Hubs
 			: base(serviceProvider) { }
 
 		// wait for response
-		public Task<bool> CreateOrder(CreateOrderInput command) => Mediator.Send(command);
+		public Task<bool> CreateOrder(CreateOrderInput command)
+		{
+			return Mediator.Send(command);
+		}
 
 		// use output
-		public Task GetOrders() => Mediator.Send(new GetOrderListInput());
+		public Task GetOrders()
+		{
+			return Mediator.Send(new GetOrderListInput());
+		}
 
 		// async response
 		public async void DeleteOrder(DeleteOrderInput command)

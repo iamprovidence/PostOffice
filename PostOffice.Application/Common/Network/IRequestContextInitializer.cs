@@ -1,6 +1,6 @@
 using System;
 
-namespace PostOffice.Application.Common.Idempotency
+namespace PostOffice.Application.Common.Network
 {
 	public interface IRequestContextInitializer
 	{

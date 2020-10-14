@@ -1,12 +1,12 @@
-using PostOffice.Application.Common.Idempotency;
+using PostOffice.Application.Common.Network;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PostOffice.Infrastructure.Idempotency
+namespace PostOffice.Infrastructure.Network
 {
 	// TODO: rewrite this simple implementation
 	// TODO: make thread safe
-	public class ConnectionManager : IConnectionManager
+	internal class ConnectionManager : IConnectionManager
 	{
 		class ConnectionEntry
 		{

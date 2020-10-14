@@ -1,4 +1,4 @@
-namespace PostOffice.Application.Common.Idempotency
+namespace PostOffice.Application.Common.Network
 {
 	public enum ConnectionType
 	{

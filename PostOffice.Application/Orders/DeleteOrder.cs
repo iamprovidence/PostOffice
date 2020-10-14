@@ -1,6 +1,5 @@
 using FluentValidation;
 using MediatR;
-using PostOffice.Application.Common.IntegrationEvents;
 using PostOffice.Application.Common.OutputPort;
 using PostOffice.Application.Common.Persistence;
 using PostOffice.Application.Orders.Outputs;
@@ -26,17 +25,14 @@ namespace PostOffice.Application.Orders
 	public class DeleteOrder : IRequestHandler<DeleteOrderInput, Unit>
 	{
 		private readonly IOrderRepository _orderRepository;
-		private readonly IEventBus _eventBus;
 		private readonly IOutputContext<IOrderOutput> _outputContext;
 
 		public DeleteOrder(
 			IOrderRepository orderRepository,
-			IEventBus eventBus,
 			IOutputContext<IOrderOutput> outputContext
 			)
 		{
 			_orderRepository = orderRepository;
-			_eventBus = eventBus;
 			_outputContext = outputContext;
 		}
 
@@ -46,8 +42,6 @@ namespace PostOffice.Application.Orders
 
 			if (isDeleted)
 			{
-				 //_eventBus.Publish(new Events.OrderDeletedIntegrationEvent(request.Ttn));
-
 				await _outputContext.NotifyAll().OrderDeleted(request.Ttn);
 			}
 

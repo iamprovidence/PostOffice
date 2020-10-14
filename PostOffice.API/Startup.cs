@@ -1,24 +1,14 @@
-using MediatR;
-using MediatR.Pipeline;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PostOffice.API.Configurations;
 using PostOffice.API.Hubs;
-using PostOffice.API.ServerSideEvents;
 using PostOffice.Application.Common.Behaviours;
-using PostOffice.Application.Common.Idempotency;
-using PostOffice.Application.Common.IntegrationEvents;
-using PostOffice.Application.Common.OutputPort;
-using PostOffice.Application.Common.Persistence;
-using PostOffice.Application.Orders.Events;
 using PostOffice.Infrastructure.HealthChecks;
 using PostOffice.Infrastructure.Idempotency;
-using PostOffice.Infrastructure.IntegrationEvents;
-using PostOffice.Infrastructure.OutputPort;
+using PostOffice.Infrastructure.Identity;
+using PostOffice.Infrastructure.Network;
 using PostOffice.Infrastructure.Persistence;
-using StackExchange.Redis;
 using System;
 
 namespace PostOffice.API
@@ -37,53 +27,20 @@ namespace PostOffice.API
 		public IServiceProvider ConfigureServices(IServiceCollection services)
 		{
 			// TODO: use autofac here
-			// TODO: regrooup services
 			services.AddCors();
-			services.AddSignalR();
-			services.AddMediatR(typeof(Application.Common.Identity.IUserContext).Assembly);
-
-			services.AddTransient(typeof(IRequestPreProcessor<>), typeof(LoggingBehaviour<>));
-			services.AddTransient(typeof(IPipelineBehavior<,>), typeof(PerformanceBehaviour<,>));
-			services.AddTransient(typeof(IPipelineBehavior<,>), typeof(TransactionBehaviour<,>));
-
-			services.AddDistributedMemoryCache();
-			var redisConnectionString = _configuration.GetValue<string>("Redis:ConnectionString");
-			services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(redisConnectionString));
-			services.AddStackExchangeRedisCache(options =>
+			services.AddNetworkConfiguration(_configuration);
+			services.AddIdempotencyServices(_configuration, option =>
 			{
-				options.InstanceName = "master";
-				options.Configuration = redisConnectionString;
+				option.InstanceName = _configuration.GetValue<string>("Redis:InstanceName");
+				option.ConnectionString = _configuration.GetValue<string>("Redis:ConnectionString");
 			});
-
-			// TODO: move to separate class
-			services.Configure<MongoDbContextConfiguration>(option =>
+			services.AddApplicationServices(_configuration);
+			services.AddIdentity(_configuration);
+			services.AddPersistenceStorage(_configuration, option =>
 			{
-				// TODO: get from config file
-				option.ConnectionString = "mongodb://192.168.99.100";
-				option.DatabaseName = "PostOffice";
+				option.ConnectionString = _configuration.GetValue<string>("MongoDb:ConnectionString");
+				option.DatabaseName = _configuration.GetValue<string>("MongoDb:DatabaseName");
 			});
-
-			services.AddUserContext(_configuration);
-
-			services.AddScoped<MongoContext>();
-			services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<MongoContext>());
-			services.AddScoped<IOrderRepository, OrderRepository>();
-
-			services.AddSingleton<IConnectionManager, ConnectionManager>();
-			services.AddScoped<ILockService, DistributedLockService>();
-
-
-			services.AddScoped<SignalRRequestContext>();
-			services.AddScoped<IRequestContextAccessor, SignalRRequestContext>(sp => sp.GetRequiredService<SignalRRequestContext>());
-			services.AddScoped<IRequestContextInitializer, SignalRRequestContext>(sp => sp.GetRequiredService<SignalRRequestContext>());
-
-			// TODO: move to separate class
-			services.AddScoped(typeof(IOutputContext<>), typeof(SignalROutputContext<>));
-
-			services.AddSingleton<IEventBus, InMemoryEventBus>();
-			services.AddScoped<OrderDeletedEventHandler>();
-
-
 			services.AddHealthChecks(_configuration);
 
 			return services.BuildServiceProvider(validateScopes: true);
@@ -98,13 +55,10 @@ namespace PostOffice.API
 					.AllowAnyMethod()
 					.AllowAnyOrigin();
 			});
+
 			app.UseRouting();
+			app.UseIdentity(_environment);
 
-			IEventBus eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
-
-			eventBus.Subscribe<OrderDeletedIntegrationEvent, OrderDeletedEventHandler>();
-
-			app.UseUserContext(_environment);
 			app.UseHealthChecks(_environment);
 			app.UseEndpoints(endpoints =>
 			{

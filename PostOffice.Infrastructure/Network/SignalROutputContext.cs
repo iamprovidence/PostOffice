@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.DependencyInjection;
-using PostOffice.Application.Common.Idempotency;
+using PostOffice.Application.Common.Network;
 using PostOffice.Application.Common.OutputPort;
 
-namespace PostOffice.Infrastructure.OutputPort
+namespace PostOffice.Infrastructure.Network
 {
-	public class SignalROutputContext<TOutputPort> : IOutputContext<TOutputPort>
+	internal class SignalROutputContext<TOutputPort> : IOutputContext<TOutputPort>
 		where TOutputPort : class, IOutputPort
 	{
 		private readonly IRequestContextAccessor _requestContext;

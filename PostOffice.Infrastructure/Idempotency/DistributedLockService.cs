@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PostOffice.Infrastructure.Idempotency
 {
-	public class DistributedLockService : ILockService
+	internal class DistributedLockService : ILockService
 	{
 		private static readonly TimeSpan DefaultRetryInterval = TimeSpan.FromMilliseconds(300);
 		private static readonly TimeSpan DefaultMaximumRetryTime = TimeSpan.FromSeconds(2);

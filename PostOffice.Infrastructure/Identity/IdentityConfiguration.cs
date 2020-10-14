@@ -3,14 +3,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PostOffice.Application.Common.Identity;
-using PostOffice.Infrastructure.Identity;
 
-namespace PostOffice.API.Configurations
+namespace PostOffice.Infrastructure.Identity
 {
-	// TODO: move to infrastructure to make implementations private
-	internal static class UserContextConfiguration
+	public static class IdentityConfiguration
 	{
-		public static void AddUserContext(this IServiceCollection services, IConfiguration configuration)
+		public static void AddIdentity(this IServiceCollection services, IConfiguration configuration)
 		{
 			services.AddScoped<UserContext>();
 			services.AddScoped<IReadOnlyUserContext>(sp => sp.GetRequiredService<UserContext>());
@@ -20,7 +18,7 @@ namespace PostOffice.API.Configurations
 			services.AddTransient<UserContextMiddleware>();
 		}
 
-		public static void UseUserContext(this IApplicationBuilder app, IWebHostEnvironment environment)
+		public static void UseIdentity(this IApplicationBuilder app, IWebHostEnvironment environment)
 		{
 			app.UseMiddleware<UserContextMiddleware>();
 		}

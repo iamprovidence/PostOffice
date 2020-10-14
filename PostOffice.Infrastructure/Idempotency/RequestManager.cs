@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PostOffice.Infrastructure.Idempotency
 {
-	public class RequestManager : IRequestManager
+	internal class RequestManager : IRequestManager
 	{
 		private static readonly TimeSpan CacheExpirationPeriod = TimeSpan.FromMinutes(1);
 

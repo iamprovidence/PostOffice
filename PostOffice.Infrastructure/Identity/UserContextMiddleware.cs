@@ -2,9 +2,9 @@ using Microsoft.AspNetCore.Http;
 using PostOffice.Application.Common.Identity;
 using System.Threading.Tasks;
 
-namespace PostOffice.API.Configurations
+namespace PostOffice.Infrastructure.Identity
 {
-	public class UserContextMiddleware : IMiddleware
+	internal class UserContextMiddleware : IMiddleware
 	{
 		private readonly IUserContextSettable _userContextSettable;
 
@@ -17,6 +17,7 @@ namespace PostOffice.API.Configurations
 		{
 			// TODO: get value from headers
 			_userContextSettable.SetContext("random");
+
 			await next.Invoke(context);
 		}
 	}

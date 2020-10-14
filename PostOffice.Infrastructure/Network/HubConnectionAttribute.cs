@@ -1,7 +1,7 @@
-using PostOffice.Application.Common.Idempotency;
+using PostOffice.Application.Common.Network;
 using System;
 
-namespace PostOffice.API.Configurations
+namespace PostOffice.Infrastructure.Network
 {
 	[AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
 	public class HubConnectionAttribute : Attribute

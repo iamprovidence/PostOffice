@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace PostOffice.Application.Common.Idempotency
+namespace PostOffice.Application.Common.Network
 {
 	public interface IConnectionManager
 	{
