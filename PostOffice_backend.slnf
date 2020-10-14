@@ -1,0 +1,15 @@
+﻿{
+  "solution": {
+    "path": "PostOffice.sln",
+    "projects": [
+      "PostOffice.API\\PostOffice.API.csproj",
+      "PostOffice.Application\\PostOffice.Application.csproj",
+      "PostOffice.Application.Common\\PostOffice.Application.Common.csproj",
+      "PostOffice.Core\\PostOffice.Core.csproj",
+      "PostOffice.Domain\\PostOffice.Domain.csproj",
+      "PostOffice.Infrastructure\\PostOffice.Infrastructure.csproj",
+      "PostOffice.Utilities\\PostOffice.Utilities.csproj",
+      "PostOffice.SmsSender\\PostOffice.SmsSender.csproj"
+    ]
+  }
+}

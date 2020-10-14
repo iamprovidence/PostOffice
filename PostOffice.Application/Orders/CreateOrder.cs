@@ -1,7 +1,7 @@
 using FluentValidation;
 using MediatR;
-using PostOffice.Application.Common.Persistence;
 using PostOffice.Application.Common.ViewModels;
+using PostOffice.Application.Orders.Interfaces;
 using PostOffice.Domain.Entities;
 using PostOffice.Domain.ValueObjects;
 using System.Collections.Generic;
@@ -53,6 +53,7 @@ namespace PostOffice.Application.Orders
 
 		public async Task<bool> Handle(CreateOrderInput request, CancellationToken cancellationToken)
 		{
+			// TODO: add send sms
 			var senderLocation = new Location(request.SenderLocation.City, request.SenderLocation.City);
 			var recipientLocation = new Location(request.RecipientLocation.City, request.RecipientLocation.City);
 			var cargos = request.Cargos.Select(c => Cargo.CreateNew(c.Width, c.Length, c.Height));

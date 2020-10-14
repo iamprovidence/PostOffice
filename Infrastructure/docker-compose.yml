@@ -3,10 +3,12 @@ version: '3.4'
 services:
   postoffice.mongo:
     image: mongo
-    ports:
-      - "27017:27017"
+    container_name: 'postoffice.mongo'
 
   postoffice.redis:
     image: redis
-    ports:
-      - "6379:6379"
+    container_name: 'postoffice.redis'
+    
+  postoffice.azurestorage:
+    image: 'mcr.microsoft.com/azure-storage/azurite'
+    container_name: 'postoffice.azurestorage'

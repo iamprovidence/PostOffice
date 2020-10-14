@@ -11,11 +11,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.dockerignore = .dockerignore
 		.editorconfig = .editorconfig
+		.env = .env
+		.env_sample = .env_sample
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
 		appveyor.yml = appveyor.yml
 		global.json = global.json
 		package.json = package.json
+		PostOffice.sln.startup.json = PostOffice.sln.startup.json
+		PostOffice.sln.startup_sample.json = PostOffice.sln.startup_sample.json
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -32,13 +36,24 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 		Infrastructure\build.cmd = Infrastructure\build.cmd
 		Infrastructure\clearall.cmd = Infrastructure\clearall.cmd
 		Infrastructure\clearcache.cmd = Infrastructure\clearcache.cmd
+		Infrastructure\docker-compose.development.yml = Infrastructure\docker-compose.development.yml
 		Infrastructure\docker-compose.yml = Infrastructure\docker-compose.yml
 		Infrastructure\runall.cmd = Infrastructure\runall.cmd
 		Infrastructure\start.cmd = Infrastructure\start.cmd
 		Infrastructure\stop.cmd = Infrastructure\stop.cmd
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostOffice.Utilities", "PostOffice.Utilities\PostOffice.Utilities.csproj", "{573D0718-3FD1-4BF7-9EB5-3BDEB8904874}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostOffice.Utilities", "PostOffice.Utilities\PostOffice.Utilities.csproj", "{573D0718-3FD1-4BF7-9EB5-3BDEB8904874}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostOffice.Application.Common", "PostOffice.Application.Common\PostOffice.Application.Common.csproj", "{FB4A1CA2-F1E8-4640-AFC1-AB40F07C14C7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostOffice.SmsSender", "PostOffice.SmsSender\PostOffice.SmsSender.csproj", "{B161A09C-ACE3-4573-87BC-092AB8F66B8C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{CC6A62F9-CC25-4C28-A994-D4D7BA180FCB}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\clearall.cmd = scripts\clearall.cmd
+		scripts\setup.cmd = scripts\setup.cmd
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -74,6 +89,14 @@ Global
 		{573D0718-3FD1-4BF7-9EB5-3BDEB8904874}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{573D0718-3FD1-4BF7-9EB5-3BDEB8904874}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{573D0718-3FD1-4BF7-9EB5-3BDEB8904874}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB4A1CA2-F1E8-4640-AFC1-AB40F07C14C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB4A1CA2-F1E8-4640-AFC1-AB40F07C14C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB4A1CA2-F1E8-4640-AFC1-AB40F07C14C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB4A1CA2-F1E8-4640-AFC1-AB40F07C14C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B161A09C-ACE3-4573-87BC-092AB8F66B8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B161A09C-ACE3-4573-87BC-092AB8F66B8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B161A09C-ACE3-4573-87BC-092AB8F66B8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B161A09C-ACE3-4573-87BC-092AB8F66B8C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

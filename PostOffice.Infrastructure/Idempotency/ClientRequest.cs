@@ -2,7 +2,7 @@ using System;
 
 namespace PostOffice.Infrastructure.Idempotency
 {
-	public class ClientRequest
+	internal class ClientRequest
 	{
 		public Guid Id { get; set; }
 		public string Name { get; set; }

@@ -1,6 +1,7 @@
 {
   "scripts": {
     "start": "cd PostOffice.Angular && npm run-script start",
-    "install": "cd PostOffice.Angular && npm run-script install"
+    "install": "cd PostOffice.Angular && npm run-script install",
+    "build": "cd PostOffice.Angular && npm run-script build"
   }
 }

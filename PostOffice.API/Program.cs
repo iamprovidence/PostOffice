@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Configuration;
+using PostOffice.Infrastructure.Configurations;
 
 namespace PostOffice.API
 {
@@ -14,6 +15,11 @@ namespace PostOffice.API
 		public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
 			WebHost
 				.CreateDefaultBuilder(args)
+				.ConfigureAppConfiguration((hostingContext, config) =>
+				{
+					config.AddEnvironmentVariables();
+					config.AddLocalEnvironmentVariablesConfiguration();
+				})
 				.UseStartup<Startup>()
 				.UseDefaultServiceProvider(configure =>
 				{
