@@ -9,7 +9,7 @@ namespace PostOffice.Application.Common.Behaviours
 	{
 		public static void AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
 		{
-			services.AddMediatR(typeof(Identity.IUserContext).Assembly);
+			services.AddMediatR(typeof(ApplicationConfiguration).Assembly);
 
 			services.AddTransient(typeof(IRequestPreProcessor<>), typeof(LoggingBehaviour<>));
 			services.AddTransient(typeof(IPipelineBehavior<,>), typeof(PerformanceBehaviour<,>));
