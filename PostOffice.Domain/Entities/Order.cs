@@ -1,4 +1,5 @@
 using PostOffice.Core.Entities;
+using PostOffice.Core.Events;
 using PostOffice.Core.Exceptions;
 using PostOffice.Domain.Enums;
 using PostOffice.Domain.Exceptions;
@@ -10,10 +11,11 @@ using System.Linq;
 namespace PostOffice.Domain.Entities
 {
 	[Table("Orders")]
-	public class Order : IEntity<TTN>, IAggregateRoot
+	public class Order : IEntity<TTN>, IAggregateRoot, IDomainEventHolder
 	{
 		public TTN Identifier { get; private set; }
 		public Money Price { get; private set; }
+		public string SenderPhoneNumber { get; private set; }
 		public string Description { get; private set; }
 		public OrderStatus Status { get; private set; }
 
@@ -23,6 +25,9 @@ namespace PostOffice.Domain.Entities
 
 		private ISet<Cargo> _cargos;
 		public ICollection<Cargo> Cargos => _cargos;
+
+		private IList<IDomainEvent> _domainEvents;
+		public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents.ToArray();
 
 		protected Order(
 			string description,
@@ -36,6 +41,7 @@ namespace PostOffice.Domain.Entities
 			Status = OrderStatus.New;
 
 			_cargos = new HashSet<Cargo>(cargos ?? Enumerable.Empty<Cargo>());
+			_domainEvents = new List<IDomainEvent>();
 
 			Description = description;
 			SenderLocation = senderLocation;
@@ -140,6 +146,16 @@ namespace PostOffice.Domain.Entities
 
 				_ => throw new UnexpectedEnumValueException<OrderStatus>(Status),
 			};
+		}
+
+		public void AddDomainEvent(IDomainEvent domainEvent)
+		{
+			_domainEvents.Add(domainEvent);
+		}
+
+		public void ClearDomainEvents()
+		{
+			_domainEvents.Clear();
 		}
 	}
 }
