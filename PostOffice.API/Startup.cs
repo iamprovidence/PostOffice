@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PostOffice.API.Hubs;
-using PostOffice.Application.Common.Behaviours;
+using PostOffice.Application;
 using PostOffice.Infrastructure.HealthChecks;
 using PostOffice.Infrastructure.Idempotency;
 using PostOffice.Infrastructure.Identity;

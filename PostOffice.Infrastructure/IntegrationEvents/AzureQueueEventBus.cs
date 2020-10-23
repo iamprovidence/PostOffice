@@ -2,8 +2,8 @@ using PostOffice.Application.Common.IntegrationEvents;
 
 namespace PostOffice.Infrastructure.IntegrationEvents
 {
-	// TODO: Add redis event bus
-	public class RedisEventBus : IEventBus
+	// TODO: Add azure queues event bus
+	public class AzureQueueEventBus : IEventBus
 	{
 		public void Publish<T>(T @event) where T : IIntegrationEvent
 		{
