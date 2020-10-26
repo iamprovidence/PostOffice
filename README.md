@@ -4,6 +4,11 @@
 
 <img align="center" src="/docs/images/logo.png" width="350"/>
 
+## Wiki
+
+To get more information on this project check our [wiki](https://github.com/iamprovidence/PostOffice/wiki).
+
+
 ## Git
 
 Branch naming convention:
