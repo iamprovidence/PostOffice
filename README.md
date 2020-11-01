@@ -4,6 +4,14 @@
 
 <img align="center" src="/docs/images/logo.png" width="350"/>
 
+## Overview
+
+This project is online implementation of post office.
+
+It will be very useful for office employees and for clients. Why? Okay, the employees can easily manage orders and change their location progress, so clients can check this information by TTN order number and be aware of order status.
+
+The system also notifies clients by sms with TTN number when order was created, so clients always have information about order and their are no needs to communicate with employees out of the system (by phone or some other way).
+
 ## Wiki
 
 To get more information on this project check our [wiki](https://github.com/iamprovidence/PostOffice/wiki).
