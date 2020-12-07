@@ -1,0 +1,93 @@
+$red-color: #b91e00
+$green-color: #78d75a
+$blue-color: #007bff
+$yellow-color: #ffc107
+
+::ng-deep
+	main
+		max-width: 400px !important
+
+.spinner
+	mat-spinner
+		margin: 0 auto
+
+.timeline 
+	display: flex
+	text-align: left
+	flex-flow: column nowrap
+
+	.event
+		display: flex
+		flex-flow: row nowrap
+
+		&:last-child .marker .line 
+			display: none !important
+
+		&.success .marker .icon 
+			color: $green-color
+
+		&.error .marker .icon 
+			color: $red-color
+			
+		&.info .marker .icon 
+			color: $blue-color
+			
+		&.warning .marker .icon 
+			color: $yellow-color
+
+	.marker 
+		display: flex
+		flex-flow: column nowrap
+		flex-basis: 0
+		flex-grow: 0
+		align-items: center
+
+		.icon 
+			display: flex
+			flex-basis: auto
+			flex-grow: 0
+			align-items: center
+			justify-content: center
+			border: 2px solid
+			border-color: grey
+			border-radius: 50%
+			min-width: 40px
+			min-height: 40px
+
+			mat-icon 
+				height: 30px
+				font-size: 30px
+				width: 30px
+
+		.line 
+			flex-basis: 0
+			flex-grow: 3
+			border: 1px solid
+			border-color: grey
+
+	.content 
+		flex-basis: 0
+		flex-grow: 2
+		padding-left: 15px
+		padding-bottom: 2 * 15px
+
+		.title 
+			font-size: 120%
+      
+
+		.time 
+			color: grey
+			display: flex
+
+		.details-list 
+			display: flex
+			flex-direction: column
+			color: grey
+			font-size: 80%
+
+			.detail 
+				display: flex
+
+				.type 
+					font-weight: bold
+					width: 120px
