@@ -1,0 +1,49 @@
+<mat-form-field>
+	<mat-label>Search order</mat-label>
+	<input matInput type="search" placeholder="Search order">
+
+	<button mat-raised-button matSuffix mat-stroked-button color="primary" aria-label="search">
+		<mat-icon>search</mat-icon>
+	</button>
+</mat-form-field>
+
+<button (click)="addEvent()">add </button>
+
+<div class="spinner" *ngIf="!hasEvents">
+	<mat-spinner></mat-spinner>
+</div>
+
+<ng-container *ngIf="hasEvents">
+	<div class="timeline">
+		<ng-container *ngFor="let event of events">
+			<div class="event" [ngClass]="getClassName(event.type)" [@childAnimation]="'open'">
+				<!--icon-->
+				<div class="marker">
+					<div class="icon">
+						<mat-icon>
+							{{ getIcon(event.type) }}
+						</mat-icon>
+					</div>
+					<div class="line"></div>
+				</div>
+				<!--content-->
+				<div class="content">
+					<div class="title">
+						{{ event.title }}
+					</div>
+					<div class="time">
+						{{ event.time }}
+					</div>
+
+					<!--event details-->
+					<div class="details-list">
+						<div class="detail" *ngFor="let detail of event.details">
+							<div class="type">{{ detail.type }}</div>
+							<div class="value">{{ detail.value }}</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</ng-container>
+	</div>
+</ng-container>
