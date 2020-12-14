@@ -4,5 +4,8 @@
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "SmsSenderStorage": "UseDevelopmentStorage=true",
     "FUNCTIONS_WORKER_RUNTIME": "dotnet"
+  },
+  "ApplicationInsights": {
+    "InstrumentationKey": "d6f39865-52cc-4a99-8e97-bde3208d0ebf"
   }
 }

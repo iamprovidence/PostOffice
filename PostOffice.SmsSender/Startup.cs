@@ -18,6 +18,7 @@ namespace PostOffice.SmsSender
 			var configuration = BuildConfiguration(builder.Services);
 
 			services.AddScoped<SmsSenderAppService>();
+			services.AddApplicationInsightsTelemetry();
 		}
 
 		public static IConfiguration BuildConfiguration(IServiceCollection services)

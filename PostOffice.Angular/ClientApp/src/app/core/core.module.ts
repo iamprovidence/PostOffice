@@ -1,5 +1,6 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { EnvironmentModule } from './environment/environment.module';
+import { TelemetryModule } from './telemetry/telemetry.module';
 
 class EnsureModuleLoadedOnceGuard {
 	constructor(targetModule: object) {
@@ -16,6 +17,7 @@ class EnsureModuleLoadedOnceGuard {
 @NgModule({
 	imports: [
 		EnvironmentModule.forRoot(),
+		TelemetryModule.forRoot(),
 	],
 })
 export class CoreModule extends EnsureModuleLoadedOnceGuard {
