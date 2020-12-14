@@ -42,6 +42,7 @@ namespace PostOffice.API
 				option.DatabaseName = _configuration.GetValue<string>("MongoDb:DatabaseName");
 			});
 			services.AddHealthChecks(_configuration);
+			services.AddApplicationInsightsTelemetry();
 
 			return services.BuildServiceProvider(validateScopes: true);
 		}
