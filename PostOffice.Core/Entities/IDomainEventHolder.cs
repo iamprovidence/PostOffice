@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace PostOffice.Core.Entities
 {
-	public interface IDomainEventHolder
+	public interface IDomainEventHolder // IDomainEventSource?
 	{
 		IReadOnlyCollection<IDomainEvent> DomainEvents { get; }
 
