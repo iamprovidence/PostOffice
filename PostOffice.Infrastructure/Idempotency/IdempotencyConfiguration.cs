@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PostOffice.Application.Common.Idempotency;
+using PostOffice.Application.Common.Locking;
 using StackExchange.Redis;
 using System;
 

@@ -1,6 +1,7 @@
 using FluentValidation;
 using MediatR;
 using PostOffice.Application.Common.Idempotency;
+using PostOffice.Application.Common.Locking;
 using PostOffice.Application.Common.OutputPort;
 using PostOffice.Application.Common.ViewModels;
 using PostOffice.Application.Orders.Interfaces;
@@ -30,27 +31,40 @@ namespace PostOffice.Application.Orders
 		}
 	}
 
-	public class EditOrderLocation : IRequestHandler<EditOrderLocationInput>
+	public class LockingBehaviour : IPipelineBehavior<EditOrderLocationInput, Unit>
 	{
 		private readonly ILockService _lockService;
+
+		public LockingBehaviour(ILockService lockService)
+		{
+			_lockService = lockService;
+		}
+
+		public async Task<Unit> Handle(EditOrderLocationInput request, CancellationToken cancellationToken, RequestHandlerDelegate<Unit> next)
+		{
+			await using (var lockingScope = await _lockService.CreateLockingScope(LockKeyHelper.GetKey(request)))
+			{
+				return await next();
+			}
+		}
+	}
+
+	public class EditOrderLocation : IRequestHandler<EditOrderLocationInput>
+	{
 		private readonly IOrderRepository _orderRepository;
 		private readonly IOutputContext<IOrderOutput> _outputContext;
 
 		public EditOrderLocation(
-			ILockService lockService,
 			IOrderRepository orderRepository,
 			IOutputContext<IOrderOutput> outputContext
 			)
 		{
-			_lockService = lockService;
 			_orderRepository = orderRepository;
 			_outputContext = outputContext;
 		}
 
 		public async Task<Unit> Handle(EditOrderLocationInput request, CancellationToken cancellationToken)
 		{
-			await _lockService.AcquireLockAsync(LockKeyHelper.GetKey(request), cancellationToken);
-
 			var ttn = new TTN(request.Ttn);
 			var order = await _orderRepository.FindOrderAsync(ttn, cancellationToken);
 
@@ -64,8 +78,6 @@ namespace PostOffice.Application.Orders
 				Ttn = request.Ttn,
 				Location = request.NewLocation,
 			});
-
-			await _lockService.ReleaseLockAsync(LockKeyHelper.GetKey(request), cancellationToken);
 
 			return Unit.Value;
 		}

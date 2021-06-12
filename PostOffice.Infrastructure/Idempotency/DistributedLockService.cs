@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 using PostOffice.Application.Common.Exceptions;
-using PostOffice.Application.Common.Idempotency;
+using PostOffice.Application.Common.Locking;
 using PostOffice.Utilities.Extensions;
 using System;
 using System.Threading;
@@ -24,6 +24,14 @@ namespace PostOffice.Infrastructure.Idempotency
 		{
 			_logger = logger;
 			_cache = cache;
+		}
+
+
+		public async ValueTask<LockingScope> CreateLockingScope(string key)
+		{
+			await AcquireLockAsync(key);
+
+			return new LockingScope(this, key);
 		}
 
 		public ValueTask AcquireLockAsync(string key, CancellationToken cancellationToken = default)
@@ -96,5 +104,6 @@ namespace PostOffice.Infrastructure.Idempotency
 
 			return new ValueTask();
 		}
+
 	}
 }
