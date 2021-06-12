@@ -1,5 +1,7 @@
 using FluentValidation;
 using MediatR;
+using PostOffice.Application.Common.Auth;
+using PostOffice.Application.Common.Auth.Concrete;
 using PostOffice.Application.Common.OutputPort;
 using PostOffice.Application.Orders.Interfaces;
 using System.Threading;
@@ -18,6 +20,21 @@ namespace PostOffice.Application.Orders
 		{
 			RuleFor(i => i.Ttn)
 				.NotEmpty();
+		}
+	}
+
+	public class CanDeleteOrderAuthorizationHandler : RequestAuthorizationPreProcessor<DeleteOrderInput>
+	{
+		public CanDeleteOrderAuthorizationHandler(ISender sender)
+			: base(sender) { }
+
+		protected override void RegisterRequirements(DeleteOrderInput request)
+		{
+			AddRequirement(new DeleteOrderRequirement
+			{
+				OrderTtn = request.Ttn,
+				UserId = "", // _userService.GetId()
+			});
 		}
 	}
 
