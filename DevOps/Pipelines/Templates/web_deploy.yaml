@@ -1,0 +1,27 @@
+parameters:
+- name: siteIdentifier
+  type: string
+  default: ''
+
+- name: artifactName
+  type: string
+  default: 'drop'
+
+jobs:
+- deployment: DeployJob
+  displayName: 'Deploy ${{parameters.siteIdentifier}}' 
+  pool:
+    name: 'Default'
+    environment: 'web-${{ parameters.siteIdentifier }}'
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+          - task: AzureWebApp@1
+            displayName: 'Deploy ${{parameters.siteIdentifier}}'
+            inputs:
+              appType: 'webApp'
+              appName: 'web-${{parameters.siteIdentifier}}'
+              resourceGroupName: 'post-office-rg'
+              package: '$(Pipeline.Workspace)/${{parameters.artifactName}}/*.zip'
+              deploymentMethod: 'auto'

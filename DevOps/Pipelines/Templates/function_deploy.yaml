@@ -1,0 +1,29 @@
+parameters:
+- name: functionIdentifier
+  type: string
+  default: ''
+ 
+
+- name: artifactName
+  type: string
+  default: 'drop'
+  
+
+
+jobs:
+- deployment: DeployJob
+  displayName: Deploy func-${{ parameters.functionIdentifier }} 
+  pool:
+    name: 'Default'
+    environment: 'function-${{ parameters.functionIdentifier }}'
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+          - task: AzureFunctionApp@1
+            displayName: 'Deploy func-${{ parameters.functionIdentifier }}'
+            inputs:
+              appType: functionApp
+              appName: 'func-${{ parameters.functionIdentifier }}'
+              package: '$(Pipeline.Workspace)/${{parameters.artifactName}}/${{parameters.artifactName}}.zip'
+              

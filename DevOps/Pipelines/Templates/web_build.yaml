@@ -1,0 +1,64 @@
+parameters:
+- name: jobName
+  type: string
+  default: 'Build'
+    
+
+- name: npmProjectPath
+  type: string
+  default: ''
+  
+- name: buildProjects
+  type: string
+  default: ''
+  
+- name: buildConfiguration
+  type: string
+  default: 'Release'
+    
+- name: artifactName
+  type: string
+  default: 'drop'
+    
+- name: disableTests
+  type: boolean
+  default: true
+    
+
+jobs:
+- job: Build
+  displayName: 'Build ${{ parameters.jobName }}'
+  pool:
+    name: Default
+  steps:
+    - ${{ if ne(parameters.npmProjectPath, '') }}:
+      - template: npm_build.yaml 
+        parameters:
+          npmProjectPath: '${{ parameters.npmProjectPath }}'
+
+    - task: DotNetCoreCLI@2
+      displayName: Build
+      inputs:
+        projects: '${{parameters.buildProjects}}'
+        arguments: '--configuration ${{parameters.buildConfiguration}}'
+    
+    - ${{ if eq(parameters.disableTests, false) }}:
+      - template: dotnetcoretests.yaml 
+
+    - ${{ if eq(parameters.disableTests, true) }}:
+      - powershell: Write-Host  "##vso[task.LogIssue type=warning;]Tests disabled for ${{ parameters.jobName }}"
+        displayName: Tests disabled warning
+
+    - task: DotNetCoreCLI@2
+      displayName: Publish
+      inputs:
+        command: publish
+        publishWebProjects: false
+        projects: '${{parameters.buildProjects}}'
+        arguments: '--configuration ${{parameters.buildConfiguration}} --output $(build.artifactstagingdirectory)'
+        zipAfterPublish: True
+    - task: PublishPipelineArtifact@1
+      displayName: 'Publish Artifact'
+      inputs:
+        targetPath: $(build.artifactstagingdirectory)
+        artifactName: ${{parameters.artifactName}} 

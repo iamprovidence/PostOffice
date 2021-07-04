@@ -1,0 +1,31 @@
+name: $(date:yyyyMMdd)$(rev:.r)
+
+trigger:
+  branches:
+    include:
+    - master
+    - develop
+  paths:
+    include:
+    - 'PostOffice.SmsSender'
+
+stages:
+- stage: 'Build'
+  displayName: 'Build azure function application'
+
+  jobs:
+  - template: Templates/function_build.yaml
+    parameters:
+      jobName: 'Function.SmsSender'
+      buildProjects: '**/PostOffice.SmsSender.csproj'
+
+- stage: 'Deploy'
+  displayName: 'Deploy azure function application'
+  dependsOn: 'Build'
+  condition: succeeded()
+
+  jobs:
+    - template: Templates/function_deploy.yaml
+      parameters:
+        functionIdentifier: 'sms-sender'
+

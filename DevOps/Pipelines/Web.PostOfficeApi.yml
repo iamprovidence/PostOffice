@@ -1,0 +1,36 @@
+name: $(date:yyyyMMdd)$(rev:.r)
+
+trigger:
+  branches:
+    include:
+    - master
+    - release/*
+  paths:
+    include:
+    - 'PostOffice.API'
+    - 'PostOffice.Application.Common'
+    - 'PostOffice.Application'
+    - 'PostOffice.Core'
+    - 'PostOffice.Domain'
+    - 'PostOffice.Infrastructure'
+    - 'PostOffice.Utilities'
+ 
+stages:
+- stage: 'Build'
+  displayName: 'Build the web application'
+
+  jobs:
+  - template: Templates/web_build.yaml
+    parameters:
+      jobName: 'PostOffice.API'
+      buildProjects: '**/PostOffice.API.csproj'
+      
+- stage: 'Deploy'
+  displayName: 'Deploy the web application'
+  dependsOn: 'Build'
+  condition: succeeded()
+  
+  jobs:
+  - template: Templates/web_deploy.yaml
+    parameters:
+      siteIdentifier: 'post-office-api'

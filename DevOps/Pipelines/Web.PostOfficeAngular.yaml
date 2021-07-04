@@ -1,0 +1,33 @@
+name: $(date:yyyyMMdd)$(rev:.r)
+
+trigger:
+  branches:
+    include:
+    - master
+    - develop
+  paths:
+    include:
+    - 'PostOffice.Angular'
+    - 'PostOffice.API'
+ 
+stages:
+- stage: 'Build'
+  displayName: 'Build angular web application'
+
+  jobs:
+  - template: Templates/web_build.yaml
+    parameters:
+      jobName: 'Web.PostOffice.Angular'
+      npmProjectPath: 'PostOffice.Angular'
+      buildProjects: '**/PostOffice.Angular.csproj'
+ 
+- stage: 'Deploy'
+  displayName: 'Deploy the web application'
+  dependsOn: 'Build'
+  condition: succeeded()
+  
+  jobs:
+  - template: Templates/web_deploy.yaml
+    parameters:
+      siteIdentifier: 'post-office-angular'
+

@@ -1,0 +1,53 @@
+parameters:
+- name: jobName
+  type: string
+  default: 'Build'
+      
+- name: buildProjects
+  type: string
+  default: ''
+  
+- name: buildConfiguration
+  type: string
+  default: 'Release'
+    
+- name: artifactName
+  type: string
+  default: 'drop'
+    
+- name: disableTests
+  type: boolean
+  default: true
+    
+
+jobs:
+- job: Build
+  displayName: 'Build ${{ parameters.jobName }}'
+  pool:
+    name: Default
+  steps:
+    - task: DotNetCoreCLI@2
+      displayName: Build
+      inputs:
+        projects: '${{parameters.buildProjects}}'
+        arguments: '--output $(System.DefaultWorkingDirectory)/publish_output --configuration ${{parameters.buildConfiguration}}'
+    
+    - ${{ if eq(parameters.disableTests, false) }}:
+      - template: dotnetcoretests.yaml 
+
+    - ${{ if eq(parameters.disableTests, true) }}:
+      - powershell: Write-Host  "##vso[task.LogIssue type=warning;]Tests disabled for ${{ parameters.jobName }}"
+        displayName: Tests disabled warning
+
+    - task: ArchiveFiles@2
+      displayName: 'Archive files'
+      inputs:
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/publish_output'
+        includeRootFolder: false
+        archiveType: zip
+        archiveFile: $(build.artifactstagingdirectory)/${{parameters.artifactName}}.zip
+        replaceExistingArchive: true
+
+    - publish: $(build.artifactstagingdirectory)/${{parameters.artifactName}}.zip
+      displayName: 'Publish Artifact'
+      artifact: ${{parameters.artifactName}}

@@ -1,0 +1,18 @@
+parameters:
+- name: npmProjectPath
+  type: string
+  default: ''
+
+steps:
+- task: Npm@1
+  displayName: 'npm install'
+  inputs:
+    workingDir: '${{parameters.npmProjectPath}}'
+    verbose: false
+- task: Npm@1
+  displayName: 'npm run build'
+  inputs:
+    command: custom
+    workingDir: '${{parameters.npmProjectPath}}'
+    verbose: false
+    customCommand: 'run build'
