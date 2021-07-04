@@ -36,8 +36,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 		Infrastructure\build.cmd = Infrastructure\build.cmd
 		Infrastructure\clearall.cmd = Infrastructure\clearall.cmd
 		Infrastructure\clearcache.cmd = Infrastructure\clearcache.cmd
-		Infrastructure\docker-compose.development.yml = Infrastructure\docker-compose.development.yml
-		Infrastructure\docker-compose.yml = Infrastructure\docker-compose.yml
 		Infrastructure\runall.cmd = Infrastructure\runall.cmd
 		Infrastructure\start.cmd = Infrastructure\start.cmd
 		Infrastructure\stop.cmd = Infrastructure\stop.cmd
@@ -54,6 +52,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{CC6A
 		scripts\clearall.cmd = scripts\clearall.cmd
 		scripts\setup.cmd = scripts\setup.cmd
 	EndProjectSection
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "infrastructure", "Infrastructure\infrastructure.dcproj", "{6BD2EC46-FA8F-44F3-AF33-903BBB347116}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -97,9 +97,16 @@ Global
 		{B161A09C-ACE3-4573-87BC-092AB8F66B8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B161A09C-ACE3-4573-87BC-092AB8F66B8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B161A09C-ACE3-4573-87BC-092AB8F66B8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BD2EC46-FA8F-44F3-AF33-903BBB347116}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BD2EC46-FA8F-44F3-AF33-903BBB347116}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BD2EC46-FA8F-44F3-AF33-903BBB347116}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BD2EC46-FA8F-44F3-AF33-903BBB347116}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6BD2EC46-FA8F-44F3-AF33-903BBB347116} = {601F49E7-6FC1-4AB6-9E33-E12E0329DCE0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {63AD0FAA-9C18-4657-A6CF-E037E92F7941}

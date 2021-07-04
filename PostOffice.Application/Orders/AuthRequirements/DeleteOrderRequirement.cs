@@ -1,3 +1,4 @@
+using PostOffice.Application.Orders.Interfaces;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,20 +11,24 @@ namespace PostOffice.Application.Common.Auth.Concrete
 	}
 	class DeleteOrderRequirementHandler : IAuthorizationHandler<DeleteOrderRequirement>
 	{
-		private readonly IApplicationDbContext _applicationDbContext;
+		private readonly IOrderRepository _orderRepository;
 
-		public DeleteOrderRequirementHandler(IApplicationDbContext applicationDbContext)
+		public DeleteOrderRequirementHandler(IOrderRepository orderRepository)
 		{
-			_applicationDbContext = applicationDbContext;
+			_orderRepository = orderRepository;
 		}
 
 		public async Task<AuthorizationResult> Handle(DeleteOrderRequirement request, CancellationToken cancellationToken)
 		{
 			var userId = request.UserId;
-			var userCourseSubscription = null; // logic
 
-			if (userCourseSubscription != null)
+			// logic
+			var canDeleteOrder = false;
+
+			if (canDeleteOrder != null)
+			{
 				return AuthorizationResult.Succeed();
+			}
 
 			return AuthorizationResult.Fail("You don't have a subscription to this course.");
 		}
