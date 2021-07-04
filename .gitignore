@@ -3,6 +3,12 @@
 .env
 PostOffice.sln.startup.json
 
+### DevOps ###
+
+# terraform
+.terraform
+*.tfstate.d
+
 ### Angular ###
 
 # compiled output
